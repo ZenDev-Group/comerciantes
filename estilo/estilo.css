@@ -398,6 +398,10 @@ body {
         width: 100%;
     }
 
+    .brand img {
+        max-width: 150px;
+    }
+
 
 
     .logo {
