@@ -1,0 +1,111 @@
+/* =========================================
+   NEW STICKY HEADER ARCHITECTURE
+   ========================================= */
+
+/* 1. Reset Main Header to be Static Hero */
+.main-header {
+    position: relative !important;
+    /* Ya no es sticky */
+    top: auto !important;
+    padding: 100px 0 145px 0 !important;
+    /* Padding fijo, no cambia */
+    transition: none !important;
+    /* Sin animaciones de layout */
+    overflow: hidden;
+    /* Mantener para recortar el bg scale */
+    box-shadow: none !important;
+}
+
+/* Pseudo-elemento bg (Mantener animaciones de zoom/blur) */
+
+
+/* 2. New Sticky Bar (Hidden by default, slides in) */
+.sticky-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1100;
+    /* Por encima de todo */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-100%);
+    /* Oculto arriba */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    align-items: center;
+}
+
+.sticky-header-bar.visible {
+    transform: translateY(0);
+}
+
+.sticky-header-bar .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Logo centrado por defecto */
+    position: relative;
+    height: 100%;
+}
+
+.sticky-brand img {
+    height: 40px;
+    width: auto;
+}
+
+/* Boton de menu en la barra sticky (visible solo desktop o si se requiere) */
+.sticky-menu-toggle {
+    position: absolute;
+    right: 20px;
+    /* A la derecha */
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none;
+    /* Por defecto oculto, activar vía media query si es desktop */
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sticky-menu-toggle span {
+    width: 25px;
+    height: 2px;
+    background: var(--secondary);
+    display: block;
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 768px) {
+
+    /* En móvil, la barra sticky también aparece al scrollear */
+    .sticky-header-bar {
+        height: 60px;
+    }
+
+    .sticky-brand img {
+        height: 32px;
+    }
+
+    /* El input de búsqueda (toggle) debe posicionarse respecto a esta barra ahora */
+    .search-area {
+        top: 60px !important;
+        /* Ajustar a la altura de la nueva barra */
+    }
+}
+
+/* DESKTOP ADJUSTMENTS */
+@media (min-width: 1024px) {
+    .sticky-menu-toggle {
+        display: flex;
+        /* Mostrar hamburguesa en sticky desktop para acceder al menú */
+    }
+
+    .sticky-header-bar .container {
+        justify-content: space-between;
+        /* Logo izq, Menu der */
+    }
+}

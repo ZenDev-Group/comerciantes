@@ -138,48 +138,31 @@ body {
 /* =========================================
    RESPONSIVE
    ========================================= */
-@media (max-width: 768px) {
-    .nav-links {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        background: var(--white);
-        flex-direction: column;
-        padding: 60px 30px;
-        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
-        z-index: 3000;
-        transition: 0.4s ease;
-    }
 
-    .nav-links.show {
-        left: 0;
-    }
-
-    .mobile-header {
-        display: block;
-        margin-bottom: 20px;
-        text-align: right;
-    }
-
-    #menu-close {
-        background: none;
-        border: none;
-        font-weight: 700;
-        font-size: 20px;
-        cursor: pointer;
-    }
-}
 
 /* ---------------------------------------------------------------------------- */
 /* SECCION 3: BARRA DE BUSQUEDA */
 /* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+/* SECCION 3: BARRA DE BUSQUEDA */
+/* ---------------------------------------------------------------------------- */
+
+/* Spacer to prevent content jump when header is fixed */
+#header-spacer {
+    display: block;
+    width: 100%;
+    /* Height will be set by JS */
+}
+
 .main-header {
     background: var(--white);
     padding: 100px 0 145px 0;
-    position: sticky;
-    top: 0;
+    position: fixed;
+    /* Changed from sticky to fixed for stability */
+    top: 84px;
+    left: 0;
+    /* Ensure full width anchor */
+    width: 100%;
     z-index: 1000;
     /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); */
     transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -188,6 +171,8 @@ body {
     /* Necesario para que el scale no desborde */
     /* Background image movido al pseudo-elemento */
 }
+
+
 
 /* Pseudo-elemento para transición suave de imagen */
 .main-header::before {
@@ -303,7 +288,7 @@ body {
 }
 
 .menu-toggle {
-    display: none;
+    display: block;
     flex-direction: column;
     gap: 5px;
     background: none;
@@ -328,6 +313,8 @@ body {
         padding: 12px 0;
         /* background-image removed handled by opacity */
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0px;
     }
 
     .main-header.sticky-active::before {
@@ -423,6 +410,8 @@ body {
         padding: 8px 0;
         /* background-image removed */
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        /* position: sticky; */
+        /* top: 0px; */
     }
 
     .main-header.sticky-active::before {
@@ -2966,7 +2955,7 @@ h2 span {
    ========================================= */
 @media (max-width: 600px) {
     .fab-container {
-        bottom: 20px;
+        bottom: 30px;
         right: 20px;
     }
 
@@ -3324,6 +3313,8 @@ h2 span {
         padding: 15px 0 !important;
         /* Sobreescribir paddings grandes */
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0px;
     }
 
     .main-header .container {
@@ -3340,21 +3331,88 @@ h2 span {
         margin: 0;
     }
 
-    .brand img {
-        /* max-width: 120px !important; */
-        /* height: auto; */
-    }
+
 
     .tagline {
         display: none !important;
         /* Limpieza total */
     }
 
-    /* Ocultar elementos desktop */
+    /* Ocultar elementos desktop (Excepto main-nav que se transforma en overlay) */
     .menu-toggle,
-    .agro-utility-bar,
-    .main-nav {
+    .agro-utility-bar {
         display: none !important;
+    }
+
+    /* Transformar el menú desktop en Sidebar Móvil */
+    .main-nav {
+        display: block !important;
+        position: static;
+        /* Reset to static/relative so it doesn't trap things weirdly, though width 0 handles it */
+        width: 0;
+        height: 0;
+        padding: 0;
+        background: transparent !important;
+        overflow: visible;
+        z-index: 10001;
+        /* High z-index so content pops out */
+    }
+
+    /* Old Overlay Logic Removed - We use #overlay div now */
+
+    #nav-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        padding-top: 60px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10002;
+        pointer-events: auto;
+        overflow-y: auto;
+        flex-direction: column;
+        /* Vertical */
+        align-items: flex-start;
+    }
+
+    #nav-menu.show {
+        transform: translateX(0);
+    }
+
+    /* Estilos de links movil */
+    #nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid #eee;
+    }
+
+    #nav-menu a {
+        color: #333;
+        padding: 15px 20px;
+        display: block;
+        font-size: 16px;
+    }
+
+    /* Header del menú movil (Cerrar) */
+    .mobile-header {
+        display: block !important;
+        /* Mostrar botón cerrar */
+        padding: 20px;
+        background: #f8f9fa;
+        width: 100%;
+    }
+
+    #menu-close {
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        color: #666;
+        cursor: pointer;
     }
 
     /* Area de Busqueda - Oculta por defecto, aparece como Overlay */
@@ -3394,20 +3452,33 @@ h2 span {
         display: flex;
         position: fixed;
         bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 350px;
+        left: 25%;
+        transform: translateX(-25%);
+        width: 70%;
+        /* Wider for 4 items */
+        max-width: 420px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border-radius: 50px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
-        padding: 10px 20px;
-        justify-content: space-around;
+        padding: 10px 10px;
+        justify-content: space-evenly;
+        /* Distribute evenly */
         align-items: center;
         z-index: 9999;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Hide floating desktop FAB on mobile since it's now in the navbar */
+    .btn-whatsapp {
+        display: none !important;
+    }
+
+    /* Move FAB up on mobile to avoid overlap */
+    .btn-whatsapp {
+        bottom: 95px !important;
+        right: 20px !important;
     }
 
     .nav-item {

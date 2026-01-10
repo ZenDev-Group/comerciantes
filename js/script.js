@@ -21,16 +21,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(raf);
 
+
     // 3. Conectar Lenis con GSAP ScrollTrigger
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         lenis.on('scroll', ScrollTrigger.update);
 
-        // Añadido para mejor sincronización
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
+
+        // NUEVA LOGICA HEADER STICKY (Slide Down)
+        // Mostrar la barra .sticky-header-bar cuando el scroll pasa 150px
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top -350px", // Al bajar 150px
+            onUpdate: (self) => {
+                const stickyBar = document.querySelector('.sticky-header-bar');
+                if (stickyBar) {
+                    if (self.direction === 1 && self.scroll() > 350) {
+                        // Scrolling Down & Pasado 150px
+                        stickyBar.classList.add('visible');
+                    } else if (self.scroll() < 350) {
+                        // Arriba del todo
+                        stickyBar.classList.remove('visible');
+                    }
+                    // Opcional: Ocultar al subir (self.direction === -1) si se quiere efecto "Smart Hide"
+                }
+            }
+        });
     }
 
 
@@ -90,24 +110,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ****************************************************** */
-    /* HEADER DINÁMICO (STICKY) CON LENIS                     */
+    /* HEADER DINÁMICO (FIXED + SPACER)                       */
     /* ****************************************************** */
     const header = document.getElementById('dynamic-header');
+    const headerSpacer = document.getElementById('header-spacer');
 
-    if (header) {
-        // Usamos el evento scroll de Lenis para mayor precisión
-        lenis.on('scroll', ({ scroll }) => {
-            // Umbral de activación (Ajustado ligeramente para que el efecto sea más natural)
-            if (scroll > 50) {
-                if (!header.classList.contains('sticky-active')) {
-                    header.classList.add('sticky-active');
+    // Función para ajustar el spacer al tamaño real del header inicial
+    const adjustSpacer = () => {
+        if (header && headerSpacer) {
+            // Desactivar transición momentáneamente para medir tamaño full
+            header.style.transition = 'none';
+            header.classList.remove('sticky-active');
+
+            // Forzar reflow/medición
+            const height = header.offsetHeight;
+            headerSpacer.style.height = `${height}px`;
+
+            // Restaurar transición
+            header.style.transition = '';
+
+            // Re-chequear estado sticky actual
+            if (lenis && lenis.scroll > 50) header.classList.add('sticky-active');
+        }
+    };
+
+    // Ejecutar al inicio y al redimensionar
+    if (header && headerSpacer) {
+        adjustSpacer();
+        window.addEventListener('resize', adjustSpacer);
+
+        // Timeout de seguridad por si cargan fuentes/img
+        setTimeout(adjustSpacer, 500);
+        setTimeout(adjustSpacer, 2000);
+
+        // Lógica de Scroll con Lenis
+        if (lenis) {
+            lenis.on('scroll', ({ scroll }) => {
+                if (scroll > 50) {
+                    if (!header.classList.contains('sticky-active')) {
+                        header.classList.add('sticky-active');
+                    }
+                } else {
+                    if (header.classList.contains('sticky-active')) {
+                        header.classList.remove('sticky-active');
+                    }
                 }
-            } else {
-                if (header.classList.contains('sticky-active')) {
-                    header.classList.remove('sticky-active');
-                }
-            }
-        });
+            });
+        }
     }
 
 
@@ -339,17 +388,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // MOBILE NAV LOGIC
         const mobileSearchBtn = document.getElementById('mobile-search-trigger');
         const mainHeader = document.querySelector('.main-header');
-        
+
         if (mobileSearchBtn && mainHeader) {
             mobileSearchBtn.addEventListener('click', (e) => {
                 e.stopPropagation(); // Evitar cierre inmediato
                 mainHeader.classList.toggle('header-search-active');
-                
+
                 // Auto focus si se abre
                 if (mainHeader.classList.contains('header-search-active')) {
                     const input = mainHeader.querySelector('input');
                     if (input) setTimeout(() => input.focus(), 100);
-                    
+
                     // Highlight botón
                     mobileSearchBtn.classList.add('active');
                 } else {
@@ -359,11 +408,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Cerrar al clickear afuera
             document.addEventListener('click', (e) => {
-                if (mainHeader.classList.contains('header-search-active') && 
-                    !mainHeader.contains(e.target) && 
+                if (mainHeader.classList.contains('header-search-active') &&
+                    !mainHeader.contains(e.target) &&
                     !mobileSearchBtn.contains(e.target)) {
                     mainHeader.classList.remove('header-search-active');
                     mobileSearchBtn.classList.remove('active');
+                }
+            });
+        }
+
+        // Mobile Bottom Menu Trigger
+        const mobileMenuBtn = document.getElementById('mobile-menu-trigger'); // Back to ID trigger
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Call the function directly since we are in the same scope
+                if (typeof toggleMenu === 'function') {
+                    toggleMenu();
+                } else {
+                    // Fallback just in case
+                    const menuOpenBtn = document.getElementById('menu-open');
+                    if (menuOpenBtn) menuOpenBtn.click();
                 }
             });
         }
