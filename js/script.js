@@ -199,6 +199,155 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ****************************************************** */
+    /* GSAP ANIMATIONS (PREMIUM SCROLL REVEALS)               */
+    /* ****************************************************** */
+
+    // Función centralizada para animaciones para mantener el código limpio
+    // Función centralizada para animaciones (Clean Slate / Safe Mode)
+    const runGSAPAnimations = () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Helper para animaciones estándar "Fade Up"
+        // 1. Ocultamos INMEDIATAMENTE los elementos para evitar el "FOUC" (Flash of Unstyled Content)
+        // 2. Animamos hacia la visibilidad (gsap.to) cuando entran en el viewport
+        const animateBatch = (selector, startTrigger = "top 125%") => {
+            const elements = document.querySelectorAll(selector);
+            if (elements.length === 0) return;
+
+            // Ocultar inmediatamente
+            gsap.set(elements, { opacity: 0, y: 20 });
+
+            // Crear el trigger para revelarlos
+            ScrollTrigger.batch(selector, {
+                start: startTrigger,
+                once: true,
+                onEnter: batch => {
+                    gsap.to(batch, {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.05,
+                        duration: 0.4,
+                        ease: "power3.out",
+                        overwrite: true,
+                        onComplete: () => {
+                            gsap.set(batch, { clearProps: "all" });
+                        }
+                    });
+                }
+            });
+        };
+
+        // Helper para Headers
+        const animateHeader = (selector, startTrigger = "top 125%") => {
+            const el = document.querySelector(selector);
+            if (!el) return;
+
+            gsap.set(el, { opacity: 0, y: 10 });
+
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: startTrigger,
+                    once: true,
+                    onComplete: () => gsap.set(el, { clearProps: "all" })
+                }
+            });
+        };
+
+        // 1. APLICACION POR SECCIONES
+
+        // EFECTO CINEMATOGRÁFICO HEADER (Zoom Out + Focus In)
+        const headerBg = document.querySelector(".main-header");
+        if (headerBg) {
+            gsap.fromTo(headerBg,
+                {
+                    "--header-bg-scale": 1.15,
+                    "--header-bg-blur": "10px"
+                },
+                {
+                    "--header-bg-scale": 1,
+                    "--header-bg-blur": "0px",
+                    duration: 1.8,
+                    ease: "power2.out"
+                }
+            );
+        }
+
+        // Categorías
+        animateBatch(".category-item");
+
+        // Business Slider & Cards
+        animateHeader(".business-slider-section .slider-header");
+        animateBatch(".business-card-premium");
+
+        // Farmacias
+        animateHeader(".farmacias-section h2");
+        animateBatch(".farmacia-card-today");
+        animateBatch(".turno-row");
+
+        // Gastronomía
+        animateHeader(".gastro-title");
+        animateBatch(".f-link");
+        animateBatch(".g-item");
+
+        // Arrivals (Nuevos)
+        animateHeader(".new-arrivals-section .slider-header");
+        animateBatch(".arrival-card");
+
+        // Eventos
+        animateHeader(".events-section h2");
+        animateBatch(".event-card");
+
+        // Essentials (Resolvé tu día)
+        animateBatch(".essential-card");
+
+        // Cine
+        animateHeader(".cinema-header");
+        animateBatch(".movie-card");
+
+        // Business CTA (Texto e imagen por separado)
+        animateHeader(".business-text");
+        animateHeader(".business-image");
+        animateBatch(".stat-card");
+
+        // Survival Kit
+        animateBatch(".kit-card-dark");
+
+        // Empleos
+        animateBatch(".job-card");
+
+
+    };
+
+    // Ejecutar animaciones asegurando que el layout esté listo
+    // Usamos una bandera para evitar doble inicialización
+    let animationsInitialized = false;
+
+    const initAnimations = () => {
+        if (animationsInitialized) return;
+        animationsInitialized = true;
+
+        runGSAPAnimations();
+
+        // Forzar recálculo de ScrollTrigger una vez que todo está listo
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+        }
+    };
+
+    if (document.readyState === 'complete') {
+        initAnimations();
+    } else {
+        window.addEventListener('load', initAnimations);
+    }
+
 }); // Fin DOMContentLoaded
 
 

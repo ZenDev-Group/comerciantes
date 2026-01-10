@@ -184,6 +184,8 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: padding;
+    overflow: hidden;
+    /* Necesario para que el scale no desborde */
     /* Background image movido al pseudo-elemento */
 }
 
@@ -198,6 +200,11 @@ body {
     background-image: url(https://fotos.perfil.com/2021/07/27/fotogaleria-la-gente-en-un-centro-comercial-observa-y-anima-a-doo-hoi-kem-en-hong-kong-mientras-juega-en-un-partido-de-tenis-de-mesa-individual-femenino-en-los-juegos-olimpicos-de-tokio-1209869.jpg);
     background-size: cover;
     background-position: center;
+    transform: scale(var(--header-bg-scale, 1));
+    /* Variable controlada por GSAP */
+    transform-origin: center center;
+    filter: blur(var(--header-bg-blur, 0px));
+    /* Variable para efecto blur */
     opacity: 1;
     transition: opacity 0.5s ease;
     z-index: -1;
@@ -525,7 +532,7 @@ body {
 .category-icon {
     width: 62px;
     height: 62px;
-    background: #ffffff;
+    background: #ffd13d;
     border: 1.5px solid #ececec;
     border-radius: 50%;
     display: flex;
@@ -2106,8 +2113,20 @@ h2 span {
     font-weight: 800;
 }
 
-.movie-card:hover {
-    transform: translateY(-6px);
+/* EFECTO SPOTLIGHT CINE (Blur Focus) */
+.movies-grid:hover .movie-card {
+    filter: blur(2px) grayscale(50%);
+    opacity: 0.6;
+    transform: scale(0.98);
+    transition: 0.4s ease;
+}
+
+.movies-grid .movie-card:hover {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.05) translateY(-5px);
+    z-index: 2;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .movie-card:hover .movie-overlay {
