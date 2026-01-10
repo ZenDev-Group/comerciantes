@@ -336,6 +336,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // MOBILE NAV LOGIC
+        const mobileSearchBtn = document.getElementById('mobile-search-trigger');
+        const mainHeader = document.querySelector('.main-header');
+        
+        if (mobileSearchBtn && mainHeader) {
+            mobileSearchBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evitar cierre inmediato
+                mainHeader.classList.toggle('header-search-active');
+                
+                // Auto focus si se abre
+                if (mainHeader.classList.contains('header-search-active')) {
+                    const input = mainHeader.querySelector('input');
+                    if (input) setTimeout(() => input.focus(), 100);
+                    
+                    // Highlight botón
+                    mobileSearchBtn.classList.add('active');
+                } else {
+                    mobileSearchBtn.classList.remove('active');
+                }
+            });
+
+            // Cerrar al clickear afuera
+            document.addEventListener('click', (e) => {
+                if (mainHeader.classList.contains('header-search-active') && 
+                    !mainHeader.contains(e.target) && 
+                    !mobileSearchBtn.contains(e.target)) {
+                    mainHeader.classList.remove('header-search-active');
+                    mobileSearchBtn.classList.remove('active');
+                }
+            });
+        }
+
         // Categorías
         animateBatch(".category-item");
 

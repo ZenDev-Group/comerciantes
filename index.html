@@ -76,7 +76,7 @@
 
     <div class="menu-overlay" id="overlay"></div>
 
-    <section class="categories-section">
+    <section class="categories-section" id="categorias">
         <div class="container">
             <div class="categories-container">
 
@@ -1513,8 +1513,27 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script src="js/script.js"></script>
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+        <button class="nav-item" id="mobile-search-trigger">
+            <i data-lucide="search"></i>
+            <span>Buscar</span>
+        </button>
+        <div class="nav-divider"></div>
+        <button class="nav-item" id="mobile-cat-trigger"
+            onclick="document.getElementById('categorias').scrollIntoView({behavior: 'smooth'})">
+            <i data-lucide="grid"></i>
+            <span>Categorías</span>
+        </button>
+    </nav>
 
+    <script src="js/script.js"></script>
+    <script>
+        // Init Lucide Icons if not handled by script.js
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
 </body>
 
 </html>
