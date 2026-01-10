@@ -182,10 +182,28 @@ body {
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-image 0.4s;
+    transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: padding;
-    background-image: url(https://fotos.perfil.com/2021/07/27/fotogaleria-la-gente-en-un-centro-comercial-observa-y-anima-a-doo-hoi-kem-en-hong-kong-mientras-juega-en-un-partido-de-tenis-de-mesa-individual-femenino-en-los-juegos-olimpicos-de-tokio-1209869.jpg);
+    /* Background image movido al pseudo-elemento */
 }
+
+/* Pseudo-elemento para transición suave de imagen */
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://fotos.perfil.com/2021/07/27/fotogaleria-la-gente-en-un-centro-comercial-observa-y-anima-a-doo-hoi-kem-en-hong-kong-mientras-juega-en-un-partido-de-tenis-de-mesa-individual-femenino-en-los-juegos-olimpicos-de-tokio-1209869.jpg);
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+
 
 .header-flex-container {
     display: flex;
@@ -294,9 +312,13 @@ body {
 @media (min-width: 769px) {
     .main-header.sticky-active {
         padding: 12px 0;
-        background-image: none !important;
-        transition: background-image 0.4s ease;
+        /* background-image removed handled by opacity */
     }
+
+    .main-header.sticky-active::before {
+        opacity: 0;
+    }
+
 
     .main-header.sticky-active .header-flex-container {
         flex-direction: row;
@@ -374,8 +396,13 @@ body {
 
     .main-header.sticky-active {
         padding: 8px 0;
-        background-image: none !important;
+        /* background-image removed */
     }
+
+    .main-header.sticky-active::before {
+        opacity: 0;
+    }
+
 
     .main-header.sticky-active .header-flex-container {
         flex-wrap: nowrap;
@@ -641,7 +668,7 @@ h2 span {
 }
 
 .business-card-premium:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -1022,7 +1049,7 @@ h2 span {
 }
 
 .btn-llamar:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
 }
 
@@ -1253,7 +1280,7 @@ h2 span {
 }
 
 .g-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
 }
 
 /* --- EFECTO HOVER EN IMAGEN --- */
@@ -1497,7 +1524,7 @@ h2 span {
 }
 
 .arrival-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-2px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     border-color: var(--primary);
 }
@@ -1665,7 +1692,7 @@ h2 span {
 }
 
 .event-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -2080,7 +2107,7 @@ h2 span {
 }
 
 .movie-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-6px);
 }
 
 .movie-card:hover .movie-overlay {
@@ -2202,7 +2229,7 @@ h2 span {
 
 .numero-link:hover {
     opacity: 0.7;
-    transform: translateX(-3px);
+    transform: translateX(-2px);
 }
 
 /* =========================================
@@ -2306,7 +2333,7 @@ h2 span {
 
 .btn-business-cta:hover {
     background: var(--primary);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.3);
 }
 
@@ -2441,7 +2468,7 @@ h2 span {
 
 .kit-card-dark:hover {
     background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     border-color: var(--primary);
 }
 
@@ -2592,7 +2619,7 @@ h2 span {
 }
 
 .job-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     border-color: var(--primary);
     box-shadow: 0 15px 35px rgba(0, 97, 255, 0.1);
 }
@@ -3090,4 +3117,158 @@ h2 span {
     .footer-agro-btn {
         width: 100%;
     }
+}
+
+/* ---------------------------------------------------------------------------- */
+/* GLOBAL CARD INTERACTIVITY (STRETCHED LINKS) */
+/* ---------------------------------------------------------------------------- */
+
+/* 1. BUSINESS PREMIUM CARDS */
+.business-card-premium {
+    position: relative;
+    /* Base para el stretched link */
+    cursor: pointer;
+}
+
+.btn-ver-p::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Cubre toda la tarjeta */
+}
+
+/* Efecto Hover en Botón al pasar mouse por TARJETA */
+.business-card-premium:hover .btn-ver-p {
+    background-color: var(--secondary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Proteger botón secundario (WSP) */
+.btn-wsp-p {
+    position: relative;
+    z-index: 2;
+    /* Encima del stretched link */
+}
+
+
+/* 2. ARRIVALS (Recientes) */
+.arrival-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.arrival-card:hover .btn-link {
+
+    color: var(--primary);
+}
+
+
+/* 3. EVENTS */
+.event-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-event-info::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.event-card:hover .btn-event-info {
+    background: var(--secondary);
+    color: white;
+}
+
+
+/* 4. ESSENTIALS (Resolvé tu día) */
+.essential-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.ess-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Efecto sutil al hover de la tarjeta */
+.essential-card:hover .ess-btn {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 5. JOBS (Empleos) */
+.job-card {
+    position: relative;
+    cursor: pointer;
+}
+
+/* En este caso el botón es btn-whatsapp-minimal */
+.btn-whatsapp-minimal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.job-card:hover .btn-whatsapp-minimal {
+    background: #128C7E;
+    color: white;
+    border-color: #128C7E;
+}
+
+
+/* 6. CINEMA */
+.movie-card {
+    position: relative;
+    cursor: pointer;
+}
+
+/* El botón está dentro del overlay, pero queremos clickear todo el poster */
+.btn-trailer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Forzamos que el overlay aparezca o al menos el botón reaccione si es posible, 
+   pero aqui el diseño original oculta cosas. 
+   Simplemente haremos que al hover del card, el botón cambie si es visible */
+.movie-card:hover .btn-trailer {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
 }

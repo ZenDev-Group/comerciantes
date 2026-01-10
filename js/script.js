@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (header) {
         // Usamos el evento scroll de Lenis para mayor precisión
         lenis.on('scroll', ({ scroll }) => {
-            // Umbral de activación
+            // Umbral de activación (Ajustado ligeramente para que el efecto sea más natural)
             if (scroll > 50) {
                 if (!header.classList.contains('sticky-active')) {
                     header.classList.add('sticky-active');
