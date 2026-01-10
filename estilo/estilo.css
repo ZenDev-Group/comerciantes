@@ -327,6 +327,7 @@ body {
     .main-header.sticky-active {
         padding: 12px 0;
         /* background-image removed handled by opacity */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     .main-header.sticky-active::before {
@@ -399,7 +400,7 @@ body {
     }
 
     .brand img {
-        max-width: 150px;
+        max-width: 180px;
     }
 
 
@@ -421,6 +422,7 @@ body {
     .main-header.sticky-active {
         padding: 8px 0;
         /* background-image removed */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     .main-header.sticky-active::before {
@@ -3311,10 +3313,17 @@ h2 span {
 /* Modificaciones Mobile */
 @media (max-width: 768px) {
 
+    .main-header::before {
+        background-image: none;
+        background-color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
     /* 1. Header Superior Simplificado */
     .main-header {
         padding: 15px 0 !important;
         /* Sobreescribir paddings grandes */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     .main-header .container {
@@ -3332,8 +3341,8 @@ h2 span {
     }
 
     .brand img {
-        max-width: 120px !important;
-        height: auto;
+        /* max-width: 120px !important; */
+        /* height: auto; */
     }
 
     .tagline {
