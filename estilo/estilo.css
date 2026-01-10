@@ -2,7 +2,7 @@
 /* RESET Y VARIABLES */
 /* ---------------------------------------------------------------------------- */
 :root {
-    --primary: #0061ff;
+    --primary: #e11d48;
     --primary-rgb: 0, 97, 255;
     /* Agregado para utilidades de transparencia */
     --secondary: #1e272e;
@@ -177,11 +177,11 @@ body {
 /* ---------------------------------------------------------------------------- */
 .main-header {
     background: var(--white);
-    padding: 130px 0 145px 0;
+    padding: 100px 0 145px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); */
     transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: padding;
     overflow: hidden;
@@ -197,7 +197,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(https://fotos.perfil.com/2021/07/27/fotogaleria-la-gente-en-un-centro-comercial-observa-y-anima-a-doo-hoi-kem-en-hong-kong-mientras-juega-en-un-partido-de-tenis-de-mesa-individual-femenino-en-los-juegos-olimpicos-de-tokio-1209869.jpg);
+    background-image: url(../imagenes/hero1.jpg);
     background-size: cover;
     background-position: center;
     transform: scale(var(--header-bg-scale, 1));
@@ -209,6 +209,8 @@ body {
     transition: opacity 0.5s ease;
     z-index: -1;
     pointer-events: none;
+    background-color: #1f3c57;
+    background-blend-mode: luminosity;
 }
 
 
@@ -228,6 +230,10 @@ body {
     flex-shrink: 0;
 }
 
+.brand img {
+    max-width: 350px;
+}
+
 /* EN: .main-header ... .brand ... */
 
 /* AGREGAR transición al span del logo */
@@ -239,9 +245,9 @@ body {
 
 /* REEMPLAZAR el bloque .tagline actual por este */
 .tagline {
-    font-size: 11px;
+    font-size: 0.8rem;
     letter-spacing: 3px;
-    color: var(--text-light);
+    color: var(--white);
     text-transform: uppercase;
     margin-top: 5px;
     /* Propiedades nuevas para la transición suave */
@@ -252,6 +258,7 @@ body {
     /* Necesario para que no se vea al encogerse */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     /* Sincronizado con el header */
+    text-shadow: 1px 1px 3px #000;
 }
 
 .search-area {
@@ -342,6 +349,10 @@ body {
         font-size: 1.5rem;
     }
 
+    .main-header.sticky-active .brand img {
+        max-width: 150px;
+    }
+
     .main-header.sticky-active .tagline {
         opacity: 0;
         max-height: 0;
@@ -386,6 +397,8 @@ body {
         text-align: center;
         width: 100%;
     }
+
+
 
     .logo {
         font-size: 2rem;
@@ -532,14 +545,14 @@ body {
 .category-icon {
     width: 62px;
     height: 62px;
-    background: #ffd13d;
+    background: #e11d48;
     border: 1.5px solid #ececec;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
-    color: #444;
+    color: #ffffff;
     transition: all 0.3s ease;
 }
 
@@ -607,7 +620,7 @@ body {
 /* SECCION 5: COMERCIOS DESTACADOS */
 /* ---------------------------------------------------------------------------- */
 .business-slider-section {
-    padding: 80px 0;
+    padding: 40px 0;
     background-color: #f4f7f6;
     position: relative;
     overflow: hidden;
@@ -847,7 +860,7 @@ h2 span {
 
 @media (max-width: 600px) {
     h2 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .business-card-premium {
@@ -872,7 +885,7 @@ h2 span {
 /* SECCION 6: FARMACIAS DE TURNO */
 /* ---------------------------------------------------------------------------- */
 .farmacias-section {
-    padding: 80px 0;
+    padding: 40px 0;
     background: #fff;
 }
 
@@ -1125,7 +1138,7 @@ h2 span {
 /* ---------------------------------------------------------------------------- */
 
 .gastro-minimal {
-    padding: 100px 0 40px 0;
+    padding: 40px 0 20px 0;
     background-color: #f8f9fa;
     position: relative;
     overflow: hidden;
@@ -1496,7 +1509,7 @@ h2 span {
 /* SECCION 8: NUEVAS APERTURAS */
 /* ---------------------------------------------------------------------------- */
 .new-arrivals-section {
-    padding: 80px 0;
+    padding: 40px 0;
     background-color: #fff;
 }
 
@@ -1666,7 +1679,7 @@ h2 span {
 /* SECCION 9: EVENTOS */
 /* ---------------------------------------------------------------------------- */
 .events-section {
-    padding: 80px 0;
+    padding: 40px 0;
     background-color: #f8fafc;
 }
 
@@ -1814,7 +1827,7 @@ h2 span {
 /* SECCION 10: RESOLVE TU DIA*/
 /* ---------------------------------------------------------------------------- */
 .essentials-section {
-    padding: 80px 0;
+    padding: 40px 0;
     background-color: #fff;
     position: relative;
 }
@@ -2399,9 +2412,7 @@ h2 span {
         gap: 50px;
     }
 
-    h2 {
-        font-size: 2.2rem;
-    }
+
 
     .benefit-list li {
         justify-content: center;
@@ -2732,7 +2743,7 @@ h2 span {
     width: 100%;
     background-color: #1E3D1A;
     padding: 90px 0;
-    margin: 50px 0;
+    /* margin: 50px 0; */
     display: flex;
     justify-content: center;
     border-left: 8px solid #ffa000;
@@ -2984,7 +2995,7 @@ h2 span {
     background-color: var(--secondary);
     color: var(--white);
     padding: 80px 0 0 0;
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 .footer-container {
@@ -3277,4 +3288,9 @@ h2 span {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
+}
+
+.footer-column img {
+    width: 190px;
+
 }
