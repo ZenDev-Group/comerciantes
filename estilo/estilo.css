@@ -1219,20 +1219,7 @@ h2 span {
     width: 100%;
 }
 
-.slider-full-width-container .nav-arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    transition: all 0.3s ease;
-}
+
 
 .slider-full-width-container .nav-arrow svg {
     width: 45px;
@@ -1925,31 +1912,30 @@ h2 span {
 
 .nav-arrow {
     position: absolute;
-    top: 55%;
+    top: 47%;
     transform: translateY(-50%);
-    background: none;
-    border: none;
+    background: white;
+    border: 1px solid #747474;
+    border-radius: 50%;
     width: 50px;
-    height: 80px;
+    height: 50px;
     cursor: pointer;
     z-index: 100;
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .nav-arrow svg {
     width: 35px;
     height: 35px;
-    stroke: #aaa;
+    stroke: #545454;
 }
 
 .left-arrow {
-    left: 10px;
+    left: 20px;
 }
 
 .right-arrow {
-    right: 10px;
+    right: 20px;
 }
 
 /* =========================================
@@ -2020,6 +2006,7 @@ h2 span {
     border: 1px solid #4ade80;
     font-size: 0.8rem;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .movies-grid {
@@ -3049,8 +3036,8 @@ h2 span {
 
 .footer-description {
     color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.75rem;
+    line-height: 1.0;
     margin-bottom: 25px;
 }
 

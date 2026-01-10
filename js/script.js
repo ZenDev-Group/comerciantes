@@ -280,6 +280,62 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
+        // INDICADOR DE SCROLL MOVIL (MARQUEE INFINITO)
+        // Solo si es móvil (< 768px)
+        if (window.innerWidth < 768) {
+            const catContainer = document.querySelector(".categories-container");
+            if (catContainer) {
+                // 0. DESHABILITAR SCROLL SNAP (Conflictos con GSAP)
+                catContainer.style.scrollSnapType = 'none';
+
+                // 1. Clonar contenido para efecto infinito
+                // Clonamos 3 sets adicionales (x4 total) para asegurar "buffer" sobrado
+                const items = Array.from(catContainer.children);
+                for (let i = 0; i < 3; i++) {
+                    items.forEach(item => catContainer.appendChild(item.cloneNode(true)));
+                }
+
+                // 2. Calcular loop preciso
+                requestAnimationFrame(() => {
+                    // La distancia del loop es la diferencia exacta entre el primer elemento y su primer clon.
+                    // Esto incluye márgenes, paddings y gaps de forma nativa.
+                    // El primer clon del Set 1 está en el índice items.length
+                    if (!items.length) return;
+
+                    const firstItem = items[0];
+                    const firstClone = catContainer.children[items.length];
+
+                    if (!firstClone) return; // Seguridad
+
+                    const loopDistance = firstClone.offsetLeft - firstItem.offsetLeft;
+
+                    // 3. Animar Scroll
+                    const scrollTween = gsap.to(catContainer, {
+                        scrollLeft: loopDistance,
+                        duration: 45, // Ajustado para mantener velocidad constante con más items
+                        ease: "none",
+                        repeat: -1,
+                        modifiers: {
+                            scrollLeft: gsap.utils.unitize(x => parseFloat(x) % loopDistance)
+                        }
+                    });
+
+                    // 4. Detener al interactuar (Touch/Click)
+                    const killAnimation = () => {
+                        scrollTween.kill();
+                        // REACTIVAR SCROLL SNAP para UX nativa al deslizar manualmente
+                        catContainer.style.scrollSnapType = 'x mandatory';
+
+                        catContainer.removeEventListener("touchstart", killAnimation);
+                        catContainer.removeEventListener("pointerdown", killAnimation);
+                    };
+
+                    catContainer.addEventListener("touchstart", killAnimation, { passive: true });
+                    catContainer.addEventListener("pointerdown", killAnimation);
+                });
+            }
+        }
+
         // Categorías
         animateBatch(".category-item");
 
