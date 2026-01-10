@@ -3400,119 +3400,122 @@ h2 span {
     /* Header del menú movil (Cerrar) */
     .mobile-header {
         display: block !important;
-        /* Mostrar botón cerrar */
         padding: 20px;
         background: #f8f9fa;
-        width: 100%;
+        width: 30% !important;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 30px;
     }
+}
 
-    #menu-close {
-        background: none;
-        border: none;
-        font-size: 14px;
-        font-weight: bold;
-        color: #666;
-        cursor: pointer;
-    }
+#menu-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+}
 
-    /* Area de Busqueda - Oculta por defecto, aparece como Overlay */
-    .search-area {
-        position: fixed;
-        /* Fixed para salir del overflow hidden del header */
-        top: 75px;
-        /* Altura aproximada del header */
-        left: 0;
-        width: 100%;
-        background: white;
-        padding: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        transform: translateY(-20px);
-        opacity: 0;
-        pointer-events: none;
-        transition: 0.3s ease;
-        z-index: 900;
-        margin: 0 !important;
-        border-bottom: 1px solid #eee;
-    }
+/* Area de Busqueda - Oculta por defecto, aparece como Overlay */
+.search-area {
+    position: fixed;
+    /* Fixed para salir del overflow hidden del header */
+    top: 75px;
+    /* Altura aproximada del header */
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease;
+    z-index: 900;
+    margin: 0 !important;
+    border-bottom: 1px solid #eee;
+}
 
-    /* Corrección de scroll para categorias */
-    #categorias {
-        scroll-margin-top: 130px;
-        /* Espacio para el header sticky */
-    }
+/* Corrección de scroll para categorias */
+#categorias {
+    scroll-margin-top: 130px;
+    /* Espacio para el header sticky */
+}
 
-    .header-search-active .search-area {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: all;
-    }
+.header-search-active .search-area {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
 
-    /* 2. Barra Inferior Fija */
-    .mobile-bottom-nav {
-        display: flex;
-        position: fixed;
-        bottom: 00px;
-        left: 25%;
-        transform: translateX(-25%);
-        width: 100%;
-        /* Wider for 4 items */
-        padding-right: 25%;
-        max-width: 420px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        /* border-radius: 50px; */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
-        padding: 8px 25% 8px 10px;
-        justify-content: space-evenly;
-        /* Distribute evenly */
-        align-items: center;
-        z-index: 9999;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+/* 2. Barra Inferior Fija */
+.mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 00px;
+    left: 25%;
+    transform: translateX(-25%);
+    width: 100%;
+    /* Wider for 4 items */
+    padding-right: 25%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* border-radius: 50px; */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    padding: 8px 25% 8px 10px;
+    justify-content: space-evenly;
+    /* Distribute evenly */
+    align-items: center;
+    z-index: 9999;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-    /* Hide floating desktop FAB on mobile since it's now in the navbar */
-    .btn-whatsapp {
-        display: none !important;
-    }
+/* Hide floating desktop FAB on mobile since it's now in the navbar */
+.btn-whatsapp {
+    display: none !important;
+}
 
-    /* Move FAB up on mobile to avoid overlap */
-    .btn-whatsapp {
-        bottom: 95px !important;
-        right: 20px !important;
-    }
+/* Move FAB up on mobile to avoid overlap */
+.btn-whatsapp {
+    bottom: 95px !important;
+    right: 20px !important;
+}
 
-    .nav-item {
-        background: none;
-        border: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-        color: #8898aa;
-        font-family: 'Inter', sans-serif;
-        font-size: 11px;
-        font-weight: 600;
-        cursor: pointer;
-        padding: 5px 15px;
-        transition: 0.2s;
-    }
+.nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #8898aa;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 15px;
+    transition: 0.2s;
+}
 
-    .nav-item.active,
-    .nav-item:active {
-        color: var(--primary);
-        transform: scale(0.95);
-    }
+.nav-item.active,
+.nav-item:active {
+    color: var(--primary);
+    transform: scale(0.95);
+}
 
-    .nav-item i {
-        width: 22px;
-        height: 22px;
-        stroke-width: 2.5px;
-    }
+.nav-item i {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.5px;
+}
 
-    .nav-divider {
-        width: 1px;
-        height: 25px;
-        background: #eee;
-    }
+.nav-divider {
+    width: 1px;
+    height: 25px;
+    background: #eee;
 }
