@@ -433,6 +433,114 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- MOBILE CATEGORIES MENU LOGIC ---
+        const catsMenu = document.getElementById('categories-menu');
+        const catsTrigger = document.getElementById('mobile-cat-trigger');
+        const catsClose = document.getElementById('cats-close');
+        const catsList = document.getElementById('mobile-cats-list');
+
+        // Populate Function
+        const populateMobileCats = () => {
+            if (!catsList) return;
+            // Clear first
+            catsList.innerHTML = '';
+
+            // Source items
+            const sourceItems = document.querySelectorAll('.categories-container .category-item');
+            const seenCategories = new Set(); // Track unique names
+
+            sourceItems.forEach(item => {
+                // Extract data
+                const text = item.querySelector('span')?.innerText;
+                const iconHTML = item.querySelector('.category-icon i, .category-icon svg')?.outerHTML; // Try both i and svg
+                const href = item.getAttribute('href') || '#';
+
+                // Only add if we haven't seen this category text before
+                if (text && !seenCategories.has(text)) {
+                    seenCategories.add(text);
+
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = href;
+
+                    // Create Icon
+                    if (iconHTML) {
+                        const iconContainer = document.createElement('div');
+                        iconContainer.innerHTML = iconHTML;
+                        // Move children to anchor
+                        while (iconContainer.firstChild) {
+                            a.appendChild(iconContainer.firstChild);
+                        }
+                    } else if (typeof lucide !== 'undefined') {
+                        // Fallback icon if extraction fails
+                        const i = document.createElement('i');
+                        i.setAttribute('data-lucide', 'circle');
+                        a.appendChild(i);
+                    }
+
+                    // Create Text
+                    const span = document.createElement('span');
+                    span.innerText = text;
+                    a.appendChild(span);
+
+                    li.appendChild(a);
+                    catsList.appendChild(li);
+
+                    // Close menu on click
+                    a.addEventListener('click', () => toggleCatsMenu());
+                }
+            });
+
+            // Re-run lucide if needed
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        };
+
+        // Toggle Function
+        function toggleCatsMenu() {
+            if (!catsMenu) return;
+            const isActive = catsMenu.classList.contains('show');
+
+            if (isActive) {
+                catsMenu.classList.remove('show');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                lenis.start();
+            } else {
+                // Update content dynamically just in case
+                // populateMobileCats(); // Can call once on load, but calling here ensures it's fresh? calling once is better.
+
+                catsMenu.classList.add('show');
+                if (overlay) overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lenis.stop();
+
+                // Ensure main menu is closed if open
+                if (navMenu && navMenu.classList.contains('show')) navMenu.classList.remove('show');
+            }
+        }
+
+        // Init
+        if (catsTrigger) {
+            populateMobileCats(); // Run on load
+            catsTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleCatsMenu();
+            });
+        }
+
+        if (catsClose) catsClose.addEventListener('click', toggleCatsMenu);
+        // Overlay logic needs to handle both menus
+        if (overlay) {
+            // Remove old listener to avoid double toggle
+            overlay.removeEventListener('click', toggleMenu);
+
+            // New Generic Listener
+            overlay.addEventListener('click', () => {
+                if (navMenu && navMenu.classList.contains('show')) toggleMenu();
+                if (catsMenu && catsMenu.classList.contains('show')) toggleCatsMenu();
+            });
+        }
+
         // Categorías
         animateBatch(".category-item");
 

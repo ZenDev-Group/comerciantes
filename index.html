@@ -80,6 +80,16 @@
 
     <div class="menu-overlay" id="overlay"></div>
 
+    <!-- Mobile Categories Sidebar -->
+    <div id="categories-menu" class="mobile-menu-sidebar">
+        <div class="mobile-header">
+            <button id="cats-close">✕</button>
+        </div>
+        <ul class="nav-links mobile-cats-list" id="mobile-cats-list">
+            <!-- JS will populate this -->
+        </ul>
+    </div>
+
     <section class="categories-section" id="categorias">
         <div class="container">
             <div class="categories-container">
@@ -1524,10 +1534,10 @@
             <span>Buscar</span>
         </button>
         <div class="nav-divider"></div>
-        <a href="#" class="nav-item" id="mobile-cat-trigger">
+        <button class="nav-item" id="mobile-cat-trigger">
             <i data-lucide="grid"></i>
             <span>Categorías</span>
-        </a>
+        </button>
         <div class="nav-divider"></div>
 
         <div class="nav-divider"></div>
