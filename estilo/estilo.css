@@ -105,6 +105,10 @@ body {
     padding: 0 20px;
 }
 
+.mobile-cats-list {
+    display: none !important;
+}
+
 .nav-links {
     list-style: none;
     display: flex;
@@ -409,6 +413,10 @@ body {
         width: 100%;
         margin-top: 15px;
         order: 3;
+    }
+
+    .mobile-cats-list {
+        display: block !important;
     }
 
     .main-header.sticky-active {
