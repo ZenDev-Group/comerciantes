@@ -152,28 +152,18 @@ body {
 /* ---------------------------------------------------------------------------- */
 
 /* Spacer to prevent content jump when header is fixed */
-#header-spacer {
-    display: block;
-    width: 100%;
-    /* Height will be set by JS */
-}
+/* Spacer removed */
 
 .main-header {
     background: var(--white);
     padding: 100px 0 145px 0;
-    position: fixed;
-    /* Changed from sticky to fixed for stability */
-    top: 84px;
-    left: 0;
-    /* Ensure full width anchor */
+    position: relative;
+    /* Changed from fixed to relative */
     width: 100%;
     z-index: 1000;
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); */
     transition: padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: padding;
     overflow: hidden;
-    /* Necesario para que el scale no desborde */
-    /* Background image movido al pseudo-elemento */
 }
 
 
@@ -318,61 +308,76 @@ body {
    RESPONSIVE
    ========================================= */
 @media (min-width: 769px) {
-    .main-header.sticky-active {
+
+    /* Estado "Fixed/Scrolled" controlado por clase JS (opcional) o estilo inline de GSAP, 
+       pero definimos aqui estilos base si se usa la clase .fixed-header */
+    .main-header.fixed-header {
         padding: 12px 0;
-        /* background-image removed handled by opacity */
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         position: fixed;
-        top: 0px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        animation: slideDown 0.4s ease forwards;
     }
 
-    .main-header.sticky-active::before {
+    /* Keyframes para la entrada suave */
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .main-header.fixed-header::before {
         opacity: 0;
     }
 
-
-    .main-header.sticky-active .header-flex-container {
+    .main-header.fixed-header .header-flex-container {
         flex-direction: row;
         justify-content: space-between;
         gap: 40px;
     }
 
-    .main-header.sticky-active .brand {
+    .main-header.fixed-header .brand {
         order: 1;
         text-align: left;
     }
 
-    .main-header.sticky-active .logo {
+    .main-header.fixed-header .logo {
         font-size: 1.5rem;
     }
 
-    .main-header.sticky-active .brand img {
+    .main-header.fixed-header .brand img {
         max-width: 150px;
     }
 
-    .main-header.sticky-active .tagline {
+    .main-header.fixed-header .tagline {
         opacity: 0;
         max-height: 0;
         margin-top: 0;
-        /* display: none; <- ELIMINADO */
     }
 
-    .main-header.sticky-active .search-area {
+    .main-header.fixed-header .search-area {
         order: 2;
         max-width: 850px;
         flex-grow: 1;
     }
 
-    .main-header.sticky-active .search-wrapper input {
+    .main-header.fixed-header .search-wrapper input {
         padding: 10px 25px 10px 50px;
         font-size: 0.9rem;
     }
 
-    .main-header.sticky-active .search-icon-lucide {
+    .main-header.fixed-header .search-icon-lucide {
         width: 16px;
         left: 20px;
     }
-
 }
 
 @media (max-width: 768px) {
@@ -419,56 +424,59 @@ body {
         display: block !important;
     }
 
-    .main-header.sticky-active {
+    .main-header.fixed-header {
         padding: 8px 0;
-        /* background-image removed */
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        /* position: sticky; */
-        /* top: 0px; */
+        position: fixed;
+        /* Ensure it's fixed on mobile too */
+        top: 0;
+        left: 0;
+        width: 100%;
+        animation: slideDown 0.4s ease forwards;
     }
 
-    .main-header.sticky-active::before {
+    .main-header.fixed-header::before {
         opacity: 0;
     }
 
 
-    .main-header.sticky-active .header-flex-container {
+    .main-header.fixed-header .header-flex-container {
         flex-wrap: nowrap;
         justify-content: flex-start;
         gap: 8px;
         padding: 0 10px;
     }
 
-    .main-header.sticky-active .menu-toggle {
+    .main-header.fixed-header .menu-toggle {
         position: static;
     }
 
-    .main-header.sticky-active .brand {
+    .main-header.fixed-header .brand {
         width: auto;
         text-align: left;
     }
 
-    .main-header.sticky-active .logo {
+    .main-header.fixed-header .logo {
         font-size: 1rem;
     }
 
-    .main-header.sticky-active .tagline {
+    .main-header.fixed-header .tagline {
         display: none;
     }
 
-    .main-header.sticky-active .search-area {
+    .main-header.fixed-header .search-area {
         margin-top: 0;
         flex-grow: 1;
         min-width: 0;
     }
 
-    .main-header.sticky-active .search-wrapper input {
+    .main-header.fixed-header .search-wrapper input {
         padding: 8px 10px 8px 32px;
         font-size: 0.8rem;
         height: 35px;
     }
 
-    .main-header.sticky-active .search-icon-lucide {
+    .main-header.fixed-header .search-icon-lucide {
         width: 14px;
         height: 14px;
         left: 10px;
@@ -478,25 +486,21 @@ body {
 @media (max-width: 480px) {
 
     /* Suavizamos la desaparición del "GUÍA" en el logo */
-    .main-header.sticky-active .logo span {
+    .main-header.fixed-header .logo span {
         opacity: 0;
         display: inline-block;
-        /* Necesario para que funcionen las propiedades de tamaño */
         max-width: 0;
-        /* Lo encogemos horizontalmente */
         overflow: hidden;
-        /* display: none; <- ELIMINADO */
     }
 
     /* Suavizamos la desaparición de la tagline también en móvil */
-    .main-header.sticky-active .tagline {
+    .main-header.fixed-header .tagline {
         opacity: 0;
         max-height: 0;
         margin-top: 0;
-        /* display: none; <- ELIMINADO */
     }
 
-    .main-header.sticky-active .search-wrapper input::placeholder {
+    .main-header.fixed-header .search-wrapper input::placeholder {
         font-size: 0.75rem;
     }
 }

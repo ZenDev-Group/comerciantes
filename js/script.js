@@ -110,53 +110,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ****************************************************** */
-    /* HEADER DINÁMICO (FIXED + SPACER)                       */
+    /* HEADER DINÁMICO (GSAP SCROLLTRIGGER)                   */
     /* ****************************************************** */
     const header = document.getElementById('dynamic-header');
-    const headerSpacer = document.getElementById('header-spacer');
 
-    // Función para ajustar el spacer al tamaño real del header inicial
-    const adjustSpacer = () => {
-        if (header && headerSpacer) {
-            // Desactivar transición momentáneamente para medir tamaño full
-            header.style.transition = 'none';
-            header.classList.remove('sticky-active');
+    // Solo ejecutar si existe GSAP y ScrollTrigger
+    if (header && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
-            // Forzar reflow/medición
-            const height = header.offsetHeight;
-            headerSpacer.style.height = `${height}px`;
+        // 1. Crear un placeholder invisible para evitar el salto de contenido
+        // cuando el header pasa a fixed.
+        // O alternativamente, usar el padding-top del body, pero un placeholder es más seguro.
+        // Sin embargo, aqui queremos que el header SCROLLEE con la pagina al principio.
+        // Entonces NO necesitamos placeholder al inicio.
 
-            // Restaurar transición
-            header.style.transition = '';
+        // Definir el punto de quiebre donde el header se transforma
+        // Puede ser el alto del topbar + nav, o un valor fijo como 200px
+        const triggerPoint = 200;
 
-            // Re-chequear estado sticky actual
-            if (lenis && lenis.scroll > 50) header.classList.add('sticky-active');
-        }
-    };
+        ScrollTrigger.create({
+            start: `top -${triggerPoint}`,
+            end: 99999,
+            toggleClass: { className: "fixed-header", targets: header },
+            onUpdate: (self) => {
+                // Lógica Direccional: 
+                // Si scrolleamos hacia abajo Y pasamos el punto -> Mostrar Fixed
+                // Si scrolleamos hacia arriba -> Ocultar Fixed o Mostrar (según gusto)
+                // Aqui la logica simple de clase toggle ya maneja la visibilidad basica
 
-    // Ejecutar al inicio y al redimensionar
-    if (header && headerSpacer) {
-        adjustSpacer();
-        window.addEventListener('resize', adjustSpacer);
-
-        // Timeout de seguridad por si cargan fuentes/img
-        setTimeout(adjustSpacer, 500);
-        setTimeout(adjustSpacer, 2000);
-
-        // Lógica de Scroll con Lenis
-        if (lenis) {
-            lenis.on('scroll', ({ scroll }) => {
-                if (scroll > 50) {
-                    if (!header.classList.contains('sticky-active')) {
-                        header.classList.add('sticky-active');
-                    }
-                } else {
-                    if (header.classList.contains('sticky-active')) {
-                        header.classList.remove('sticky-active');
-                    }
+                // Animación de entrada
+                if (self.isActive && self.direction === 1) {
+                    // Entrando modo fixed (bajando)
+                    // gsap.to(header, { y: 0, opacity: 1, duration: 0.3 });
+                } else if (!self.isActive) {
+                    // Saliendo modo fixed (subiendo y llegando arriba)
+                    // gsap.set(header, { y: 0, opacity: 1 });
                 }
-            });
-        }
+            }
+        });
     }
 
 
