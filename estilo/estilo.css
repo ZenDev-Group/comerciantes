@@ -193,7 +193,7 @@ body {
     transition: opacity 0.5s ease;
     z-index: -1;
     pointer-events: none;
-    background-color: #1f3c57;
+    background-color: #c2c2c2;
     background-blend-mode: luminosity;
 }
 
@@ -249,7 +249,7 @@ body {
 
 .search-area {
     width: 100%;
-    max-width: 650px;
+    max-width: 750px;
     transition: 0.4s ease;
     margin: 0px auto;
     /* Push to right if needed, or stick to justify-between */
@@ -424,7 +424,7 @@ body {
     }
 
     .brand img {
-        max-width: 180px;
+        max-width: 150px;
     }
 
 
@@ -558,12 +558,14 @@ body {
 
 .categories-container {
     display: flex;
-    gap: 15px;
+    gap: 0px;
     overflow-x: auto;
-    padding: 25px 20px;
+    padding: 15px 10px;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    justify-content: flex-start;
+    border-bottom: 1px solid #ccc;
 }
 
 .categories-container::-webkit-scrollbar {
@@ -582,16 +584,16 @@ body {
 }
 
 .category-icon {
-    width: 62px;
-    height: 62px;
-    background: #e11d48;
-    border: 1.5px solid #ececec;
-    border-radius: 50%;
+    /* width: 62px; */
+    /* height: 62px; */
+    /* background: #e11d48; */
+    /* border: 1.5px solid #ececec; */
+    /* border-radius: 50%; */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
-    color: #ffffff;
+    color: #e11d48;
     transition: all 0.3s ease;
 }
 
@@ -602,10 +604,10 @@ body {
 }
 
 .category-item span {
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 0.7rem;
+    /* font-weight: 700; */
     color: #666;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 0.5px;
     text-align: center;
     line-height: 1.2;
@@ -616,7 +618,6 @@ body {
     border-color: var(--primary);
     color: var(--primary);
     transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0, 97, 255, 0.08);
 }
 
 .category-item:hover span {
@@ -650,8 +651,8 @@ body {
     }
 
     .category-icon {
-        width: 70px;
-        height: 70px;
+        /* width: 70px; */
+        /* height: 70px; */
     }
 }
 
@@ -2902,7 +2903,7 @@ h2 span {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+    /* box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); */
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 9999;
@@ -3378,11 +3379,12 @@ h2 span {
 
     /* 1. Header Superior Simplificado */
     .main-header {
-        padding: 15px 0 !important;
+        padding: 10px 0 !important;
         /* Sobreescribir paddings grandes */
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
         position: sticky;
         top: 0px;
+        border-bottom: 1px solid #ccc;
     }
 
     .main-header .container {
@@ -3588,10 +3590,10 @@ h2 span {
         flex-direction: column;
         align-items: center;
         gap: 5px;
-        color: #8898aa;
+        color: #646464;
         font-family: 'Inter', sans-serif;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         padding: 5px;
         /* Reduced specific padding */
@@ -3610,7 +3612,7 @@ h2 span {
     .nav-item svg {
         width: 22px;
         height: 22px;
-        stroke-width: 2.5px;
+        /* stroke-width: 2.5px; */
     }
 
     .nav-divider {
