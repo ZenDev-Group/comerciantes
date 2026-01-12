@@ -34,10 +34,15 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-y: scroll
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
     color: var(--text-dark);
+    /* overflow: scroll; */
 }
 
 .container {
@@ -3657,14 +3662,14 @@ h2 span {
         left: 50%;
         transform: translateX(-50%) translateY(100%);
         /* Keep X centered, animate Y */
-        max-width: 600px;
+        max-width: 60vw;
         /* Tablet/Desktop limit */
         height: auto;
-        min-height: 50vh;
+        min-height: 85vh;
         max-height: 85vh;
-        bottom: 20px;
+        bottom: 0px;
         /* Floating slightly */
-        border-radius: 24px;
+        border-radius: 24px 24px 0px 0px;
         /* Fully rounded */
     }
 }
