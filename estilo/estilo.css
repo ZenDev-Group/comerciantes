@@ -1520,7 +1520,7 @@ h2 span {
 /* SECCION 8: NUEVAS APERTURAS */
 /* ---------------------------------------------------------------------------- */
 .new-arrivals-section {
-    padding: 40px 0;
+    padding: 40px 10px;
     background-color: #fff;
 }
 
@@ -1690,7 +1690,7 @@ h2 span {
 /* SECCION 9: EVENTOS */
 /* ---------------------------------------------------------------------------- */
 .events-section {
-    padding: 40px 0;
+    padding: 40px 10px;
     background-color: #f8fafc;
 }
 
@@ -1997,7 +1997,7 @@ h2 span {
 }
 
 .cinema-section {
-    padding: 80px 0;
+    padding: 80px 10px;
     background-color: #000000;
     color: #fff;
 }
@@ -2439,7 +2439,7 @@ h2 span {
 /* SECCION 14: KIT DE SUPERVIVENCIA */
 /* ---------------------------------------------------------------------------- */
 .survival-kit-dark {
-    padding: 80px 0;
+    padding: 80px 10px;
     background-color: #1a202c;
     color: #ffffff;
 }
