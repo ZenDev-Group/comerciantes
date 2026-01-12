@@ -386,6 +386,20 @@ body {
 
 @media (max-width: 768px) {
 
+    .slider-header p {
+        font-size: 0.8rem !important;
+    }
+
+    .g-desc {
+
+        font-size: 0.8rem !important;
+
+    }
+
+    .header-text p {
+        font-size: 0.8rem !important;
+    }
+
     .floating-header {
         display: none;
     }
