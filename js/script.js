@@ -110,43 +110,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ****************************************************** */
-    /* HEADER DINÁMICO (GSAP SCROLLTRIGGER)                   */
+    /* FLOATING HEADER LOGIC (NEW REFACTOR)                   */
     /* ****************************************************** */
-    const header = document.getElementById('dynamic-header');
+    const floatingHeader = document.getElementById('floating-header');
 
-    // Solo ejecutar si existe GSAP y ScrollTrigger
-    if (header && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    // We want to show the floating header when we scroll past the main hero area.
+    // Let's say 400px (approx height of hero).
+    if (floatingHeader) {
+        // Simple scroll listener is often smoother for this than ScrollTrigger toggleClass 
+        // because we don't need complex pinning, just show/hide.
+        // However, we can use ScrollTrigger for performance if preferred.
 
-        // 1. Crear un placeholder invisible para evitar el salto de contenido
-        // cuando el header pasa a fixed.
-        // O alternativamente, usar el padding-top del body, pero un placeholder es más seguro.
-        // Sin embargo, aqui queremos que el header SCROLLEE con la pagina al principio.
-        // Entonces NO necesitamos placeholder al inicio.
-
-        // Definir el punto de quiebre donde el header se transforma
-        // Puede ser el alto del topbar + nav, o un valor fijo como 200px
-        const triggerPoint = 200;
-
-        ScrollTrigger.create({
-            start: `top -${triggerPoint}`,
-            end: 99999,
-            toggleClass: { className: "fixed-header", targets: header },
-            onUpdate: (self) => {
-                // Lógica Direccional: 
-                // Si scrolleamos hacia abajo Y pasamos el punto -> Mostrar Fixed
-                // Si scrolleamos hacia arriba -> Ocultar Fixed o Mostrar (según gusto)
-                // Aqui la logica simple de clase toggle ya maneja la visibilidad basica
-
-                // Animación de entrada
-                if (self.isActive && self.direction === 1) {
-                    // Entrando modo fixed (bajando)
-                    // gsap.to(header, { y: 0, opacity: 1, duration: 0.3 });
-                } else if (!self.isActive) {
-                    // Saliendo modo fixed (subiendo y llegando arriba)
-                    // gsap.set(header, { y: 0, opacity: 1 });
+        // Option A: ScrollTrigger simple toggle
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.create({
+                start: "top -350px",
+                trigger: "body",
+                onUpdate: (self) => {
+                    // Show when scrolled down past 350px
+                    if (self.scroll() > 350) {
+                        floatingHeader.classList.add('visible');
+                    } else {
+                        floatingHeader.classList.remove('visible');
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        // Mobile Toggle Logic for Floating Header
+        const floatMenuBtn = document.getElementById('floating-menu-trigger');
+        if (floatMenuBtn) {
+            floatMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu(); // Re-use existing toggleMenu function
+            });
+        }
     }
 
 

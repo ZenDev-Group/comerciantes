@@ -66,13 +66,32 @@
 
             <div class="brand">
                 <img src="imagenes/comerciantes-logo.png" alt="Logo">
-                <p class="tagline">Comercio, Servicios y Comunidad</p>
+                <p class="tagline">¡Todo Colón en tu bolsillo!</p>
             </div>
 
             <div class="search-area">
                 <div class="search-wrapper">
                     <i data-lucide="search" class="search-icon-lucide"></i>
-                    <input type="text" placeholder="Explorá comercios, servicios y eventos">
+                    <input type="text" placeholder="¿Qué tenés ganas de hacer hoy? (ej: Pizza, Plomero, Cine...)">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING HEADER (Appears on Scroll) -->
+    <header class="floating-header" id="floating-header">
+        <div class="container header-flex-container">
+
+            <div class="brand-mini">
+
+                <img src="imagenes/comerciantes-logo-header.png" alt="Logo">
+
+
+            </div>
+            <div class="search-area-mini">
+                <div class="search-wrapper">
+                    <i data-lucide="search" class="search-icon-lucide"></i>
+                    <input type="text" placeholder="Buscar...">
                 </div>
             </div>
         </div>
@@ -96,37 +115,37 @@
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="utensils"></i></div>
-                    <span>Gastronomía</span>
+                    <span>¿Dónde Comer?</span>
                 </a>
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="shopping-bag"></i></div>
-                    <span>Moda y Estética</span>
+                    <span>Look & Relax</span>
                 </a>
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="home"></i></div>
-                    <span>Hogar y Const.</span>
+                    <span>Tu Casa</span>
                 </a>
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="heart-pulse"></i></div>
-                    <span>Salud y Bienestar</span>
+                    <span>Salud</span>
                 </a>
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="briefcase"></i></div>
-                    <span>Serv. Profesionales</span>
+                    <span>Profesionales</span>
                 </a>
 
                 <a href="#" class="category-item">
                     <div class="category-icon"><i data-lucide="car"></i></div>
-                    <span>Motor</span>
+                    <span>Tu Auto</span>
                 </a>
 
                 <a href="#" class="category-item agro-item">
                     <div class="category-icon"><i data-lucide="tractor"></i></div>
-                    <span>Agroindustria</span>
+                    <span>Campo & Agro</span>
                 </a>
 
             </div>
@@ -136,8 +155,9 @@
         <div class="container-slider-extra">
 
             <div class="slider-header">
-                <h2>Comercios <span>Destacados</span></h2>
-                <p>Descubrí los negocios más recomendados de Colón</p>
+                <h2>Los Favoritos de la <span>Ciudad</span></h2>
+                <p>Estos lugares la están rompiendo. Calidad garantizada y recomendados por vecinos como vos. ¡No te los
+                    pierdas!</p>
             </div>
 
             <div class="slider-container">
@@ -153,9 +173,10 @@
                             alt="Pizzería">
                         <div class="card-content-p">
                             <h3>Pizzería La Central</h3>
-                            <p>Las mejores pizzas al horno de barro en el corazón de la ciudad.</p>
+                            <p>¿Masa madre y horno de barro? Sí, por favor. El verdadero sabor italiano a la vuelta de
+                                la esquina.</p>
                             <div class="card-actions">
-                                <a href="#" class="btn-ver-p">Ver Local</a>
+                                <a href="#" class="btn-ver-p">¡Quiero una pizza!</a>
                                 <a href="https://wa.me/tunumero" class="btn-wsp-p" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
@@ -176,9 +197,9 @@
                             alt="Boutique">
                         <div class="card-content-p">
                             <h3>Tienda Nova</h3>
-                            <p>Tendencias de temporada y las mejores marcas exclusivas.</p>
+                            <p>Renovate. Las marcas que buscás y las tendencias que se vienen, están acá.</p>
                             <div class="card-actions">
-                                <a href="#" class="btn-ver-p">Ver Local</a>
+                                <a href="#" class="btn-ver-p">Ver Colección</a>
                             </div>
                         </div>
                     </div>
@@ -189,9 +210,9 @@
                             alt="Mueblería">
                         <div class="card-content-p">
                             <h3>Muebles Colón</h3>
-                            <p>Diseño y calidad para renovar todos tus espacios.</p>
+                            <p>Dale amor a tu casa. Diseño, confort y esa calidad que dura para siempre.</p>
                             <div class="card-actions">
-                                <a href="#" class="btn-ver-p">Ver Local</a>
+                                <a href="#" class="btn-ver-p">Renovar mi espacio</a>
                             </div>
                         </div>
                     </div>
@@ -240,7 +261,7 @@
 
             <div class="slider-footer">
                 <a href="#" class="btn-ver-mas-discreto">
-                    Ver todos los comercios <i data-lucide="arrow-right"></i>
+                    Explorar todo el Ranking <i data-lucide="arrow-right"></i>
                 </a>
             </div>
 
@@ -348,15 +369,16 @@
             <div class="gastro-nav">
                 <div class="gastro-title">
                     <span class="g-subtitle">Explorá la ciudad</span>
-                    <h2>Sabores locales</h2>
-                    <p class="g-desc">Una selección curada de los mejores puntos gastronómicos de Colón.</p>
+                    <h2>¿Sale comidita?</h2>
+                    <p class="g-desc">Desde ese café mañanero hasta la cena que te merecés. Elegí tu próxima parada
+                        gastronómica.</p>
                 </div>
 
                 <div class="filter-group">
                     <button class="f-link active" data-filter="all">Todos</button>
-                    <button class="f-link" data-filter="parrilla">Parrillas</button>
-                    <button class="f-link" data-filter="cafe">Café</button>
-                    <button class="f-link" data-filter="restaurante">Restaurantes</button>
+                    <button class="f-link" data-filter="parrilla">Parrilla</button>
+                    <button class="f-link" data-filter="cafe">Cafecito</button>
+                    <button class="f-link" data-filter="restaurante">Gourmet</button>
                 </div>
             </div>
         </div>
@@ -611,8 +633,8 @@
         <div class="container">
 
             <div class="slider-header">
-                <h2>Recién <span>Llegados</span></h2>
-                <p>Conocé los nuevos comercios y emprendimientos que se suman a nuestra comunidad.</p>
+                <h2>Recién <span>salidos del horno</span></h2>
+                <p>Lo nuevo, lo fresco y lo que tenés que conocer antes que nadie. ¡Dales la bienvenida!</p>
             </div>
 
             <div class="arrivals-grid">
@@ -621,7 +643,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400"
                             alt="Cafetería">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Gastronomía</span>
@@ -638,7 +660,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=400"
                             alt="Gimnasio">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Bienestar</span>
@@ -655,7 +677,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400"
                             alt="Tienda">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Indumentaria</span>
@@ -672,7 +694,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400"
                             alt="Cafetería">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Gastronomía</span>
@@ -689,7 +711,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400"
                             alt="Cafetería">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Gastronomía</span>
@@ -706,7 +728,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=400"
                             alt="Gimnasio">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Bienestar</span>
@@ -723,7 +745,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400"
                             alt="Tienda">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Indumentaria</span>
@@ -740,7 +762,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400"
                             alt="Cafetería">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Gastronomía</span>
@@ -757,7 +779,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=400"
                             alt="Gimnasio">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Bienestar</span>
@@ -774,7 +796,7 @@
                     <div class="arrival-img">
                         <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400"
                             alt="Tienda">
-                        <span class="new-badge">¡NUEVO!</span>
+                        <span class="new-badge">¡ESTRENO!</span>
                     </div>
                     <div class="arrival-info">
                         <span class="arrival-cat">Indumentaria</span>
@@ -796,10 +818,11 @@
 
             <div class="section-header-inline">
                 <div class="header-text">
-                    <h2>Próximos <span>Eventos</span></h2>
-                    <p>No te pierdas nada de lo que pasa en la ciudad</p>
+                    <h2>¡Agenda <span>Completa!</span></h2>
+                    <p>¿Aburrido en casa? ¡Imposible! Mirá todo lo que hay para hacer en Colón. Cine, música y ferias.
+                    </p>
                 </div>
-                <a href="#" class="btn-calendario">Ver cartelera completa</a>
+                <a href="#" class="btn-calendario">Ver toda la cartelera</a>
             </div>
 
             <div class="events-grid">
@@ -880,8 +903,8 @@
         <div class="container">
 
             <div class="slider-header">
-                <h2>Moda y <span>belleza</span></h2>
-                <p>Encontrá los mejores comercios de moda y belleza.</p>
+                <h2>Brillá más que nunca </h2>
+                <p>Mimos para vos, cambios de look y las mejores vidrieras de moda. Porque te lo merecés.</p>
             </div>
 
             <div class="arrivals-grid">
@@ -978,8 +1001,8 @@
     <section class="essentials-section">
         <div class="container-slider-extra">
             <div class="slider-header">
-                <h2>Resolvé tu <span>Día</span></h2>
-                <p>Servicios y comercios esenciales que facilitan tu rutina.</p>
+                <h2>Soluciones <span>Mágicas</span></h2>
+                <p>Esos servicios que te salvan las papas cuando más lo necesitás. Tenelos a mano.</p>
             </div>
 
             <div class="slider-container">
@@ -995,7 +1018,7 @@
                         <div class="essential-text">
                             <span class="ess-tag">Servicio</span>
                             <h3>Lavandería</h3>
-                            <p>Ropa limpia en 24hs a domicilio.</p>
+                            <p>Olvídate de lavar. Ropa limpia y perfumada sin mover un dedo.</p>
                             <a href="#" class="ess-btn">Contactar</a>
                         </div>
                         <div class="essential-img">
@@ -1008,7 +1031,7 @@
                         <div class="essential-text">
                             <span class="ess-tag">Mascotas</span>
                             <h3>Pet Shop</h3>
-                            <p>Alimentos premium y accesorios.</p>
+                            <p>Todo para tu mejor amigo. Alimento y juguetes.</p>
                             <a href="#" class="ess-btn">Ver más</a>
                         </div>
                         <div class="essential-img">
@@ -1021,7 +1044,7 @@
                         <div class="essential-text">
                             <span class="ess-tag">Oficios</span>
                             <h3>Ferretería</h3>
-                            <p>Herramientas y asesoramiento.</p>
+                            <p>¿Se rompió algo? Acá encontrás el repuesto seguro.</p>
                             <a href="#" class="ess-btn">Ver más</a>
                         </div>
                         <div class="essential-img">
@@ -1047,7 +1070,7 @@
                         <div class="essential-text">
                             <span class="ess-tag">Reparos</span>
                             <h3>Cerrajería</h3>
-                            <p>Urgencias las 24hs en toda la ciudad.</p>
+                            <p>¿Te quedaste afuera? Te salvamos las 24hs.</p>
                             <a href="#" class="ess-btn">Llamar</a>
                         </div>
                         <div class="essential-img">
@@ -1060,7 +1083,7 @@
                         <div class="essential-text">
                             <span class="ess-tag">Tecnología</span>
                             <h3>Insumos PC</h3>
-                            <p>Tintas, papeles y cables en el acto.</p>
+                            <p>Tintas y cables ya. Que no se te corte el trabajo.</p>
                             <a href="#" class="ess-btn">Ver más</a>
                         </div>
                         <div class="essential-img">
@@ -1086,8 +1109,8 @@
 
             <div class="cinema-header">
                 <div class="header-text">
-                    <h2>Cine <span>Colón</span></h2>
-                    <p>Disfrutá de los mejores estrenos en la pantalla grande</p>
+                    <h2>¿Pinta <span> Cine?</span></h2>
+                    <p>Los mejores estrenos, olorcito a pochoclo y la magia de la pantalla grande. ¡Vení al Colón!</p>
                     <div class="cinema-info-contact">
                         <span><strong>Dirección:</strong> Calle 47 e/ 18 y 19</span>
                         <span class="sep">|</span>
@@ -1194,20 +1217,21 @@
         <div class="container-business">
             <div class="business-content">
                 <div class="business-text">
-                    <span class="business-badge">ESPACIO PARA COMERCIOS</span>
-                    <h2>Hacé que tu negocio <span>crezca con nosotros.</span></h2>
+                    <span class="business-badge">¡Despegá tu Negocio con Nosotros!</span>
+                    <h2>No seas tímido, mostrale a todo Colón lo que hacés. Unite a la vidriera digital más grande de la
+                        ciudad, vendé más y recibí pedidos directo a tu <span>WhatsApp.</span></h2>
                     <p>Sumate a la plataforma líder de Colón. Mostrá tus productos, informá tus horarios y recibí
                         pedidos directamente por WhatsApp. No te quedes afuera de la vidriera digital más grande de la
                         ciudad.</p>
 
                     <ul class="benefit-list">
-                        <li><span class="icon">🚀</span> Mayor visibilidad en la ciudad</li>
-                        <li><span class="icon">📱</span> Enlace directo a tu WhatsApp</li>
-                        <li><span class="icon">⭐</span> Posicionamiento como destacado</li>
+                        <li><span class="icon">🚀</span> Hacete ver: Llegá a miles de vecinos cada mes.</li>
+                        <li><span class="icon">📱</span> Venta directa: Clic y a tu WhatsApp, sin intermediarios.</li>
+                        <li><span class="icon">⭐</span> Posicionamiento: Tu marca, donde tiene que estar.</li>
                     </ul>
 
                     <a href="https://wa.me/tu-numero" class="btn-business-cta">
-                        Quiero anunciar mi comercio
+                        ¡Quiero sumar mi comercio YA!
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1235,8 +1259,8 @@
             <div class="kit-header-dark">
                 <div class="kit-title-group">
                     <span class="kit-badge">Servicios Esenciales</span>
-                    <h2>Kit de <span>Supervivencia</span></h2>
-                    <p>Teléfonos de emergencia y servicios públicos con marcado directo.</p>
+                    <h2>Kit de <span>Emergencia</span></h2>
+                    <p>Guardá esta sección. Ojalá no la uses nunca, pero mejor tenerlos a mano 😉.</p>
                 </div>
             </div>
 
@@ -1377,8 +1401,8 @@
     <section class="logistica-local">
         <div class="container">
             <div class="section-intro-compact">
-                <span class="tagline">Servicios Locales</span>
-                <h2>Transporte y Envíos</h2>
+                <span class="tagline">Remises, fletes y comisionistas para moverte vos o tus cosas.</span>
+                <h2>¡Te llevamos!</h2>
             </div>
 
             <div class="logistica-grid">
@@ -1451,7 +1475,8 @@
         <div class="job-list-container">
 
             <div class="section-header-cool">
-                <span class="top-badge">Oportunidades</span>
+                <span class="top-badge">¿Buscás laburo o querés cambiar? Mirá quién está contratando en la
+                    ciudad.</span>
                 <h2 class="job-section-title">Búsquedas <span>Laborales</span></h2>
                 <div class="title-underline"></div>
             </div>
@@ -1594,7 +1619,7 @@
         <div class="footer-container">
             <div class="footer-column">
                 <img src="imagenes/comerciantes-logo-footer.png" alt="Logo">
-                <p class="footer-description">Información local, comercio e industria en un solo lugar.</p>
+                <p class="footer-description">Hecho con ❤️ para la gente de Colón.</p>
                 <a href="#agro-banner-minimal" class="footer-agro-btn">
                     Ir a Guía Agroindustrial
                 </a>
