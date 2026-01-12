@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Inicializar Lenis para TODOS los dispositivos (sin media query restrictiva)
     const lenis = new Lenis({
-        lerp: 0.08,             // Suavizado un poco más natural
+        lerp: 0.18,             // Suavizado un poco más natural
         wheelMultiplier: 1,     // Velocidad de scroll normal
         smoothWheel: true,
         // Eliminamos la mediaQuery para que funcione en mobile también si se desea,
@@ -598,6 +598,91 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         window.addEventListener('load', initAnimations);
     }
+
+
+    /* ****************************************************** */
+    /* UNIVERSAL BOTTOM SHEET MODAL LOGIC                     */
+    /* ****************************************************** */
+    const universalModal = document.getElementById('universal-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalSheet = document.getElementById('modal-sheet');
+    const modalCloseBtn = document.getElementById('modal-close');
+    const modalContent = document.getElementById('modal-content');
+
+    // Selectors that should trigger the modal
+    const modalTriggers = document.querySelectorAll('.business-card-premium, .arrival-card, .g-item, .explore-card');
+
+    const openModal = (triggerElement) => {
+        if (!universalModal || !modalSheet || !modalBackdrop) return;
+
+        // 1. Prepare Content (Placeholder or Dynamic)
+        // Here you would eventually fetch/populate real data based on the triggerElement
+        // const title = triggerElement.querySelector('h3')?.innerText || "Detalles";
+        // modalContent.innerHTML = `<h2>${title}</h2>...`; 
+
+        // 2. Set Display Block
+        universalModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Lock Body Scroll
+
+        // 3. Animate In (GSAP)
+        if (typeof gsap !== 'undefined') {
+            // Reset states
+            gsap.set(modalBackdrop, { opacity: 0 });
+            gsap.set(modalSheet, { y: "100%" });
+
+            // Animate
+            gsap.to(modalBackdrop, { opacity: 1, duration: 0.3, ease: "power2.out" });
+            gsap.to(modalSheet, {
+                y: "0%",
+                duration: 0.5,
+                ease: "power3.out"
+            });
+        }
+    };
+
+    const closeModal = () => {
+        if (!universalModal) return;
+
+        if (typeof gsap !== 'undefined') {
+            // Animate Out
+            gsap.to(modalBackdrop, { opacity: 0, duration: 0.3, ease: "power2.in" });
+            gsap.to(modalSheet, {
+                y: "100%",
+                duration: 0.3,
+                ease: "power3.in",
+                onComplete: () => {
+                    universalModal.style.display = 'none';
+                    document.body.style.overflow = ''; // Restore Scroll
+                }
+            });
+        } else {
+            // Fallback
+            universalModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    };
+
+    // Attach Listeners
+    modalTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            // Prevent default if it's a link with #
+            const href = trigger.getAttribute('href');
+            if (!href || href === '#') {
+                e.preventDefault();
+            }
+            openModal(trigger);
+        });
+    });
+
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+    // Close on Escape Key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && universalModal.style.display === 'block') {
+            closeModal();
+        }
+    });
 
 }); // Fin DOMContentLoaded
 

@@ -876,6 +876,105 @@
         </div>
     </section>
 
+    <section class="new-arrivals-section">
+        <div class="container">
+
+            <div class="slider-header">
+                <h2>Moda y <span>belleza</span></h2>
+                <p>Encontrá los mejores comercios de moda y belleza.</p>
+            </div>
+
+            <div class="arrivals-grid">
+
+                <div class="arrival-card">
+                    <div class="arrival-img">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=400"
+                            alt="Gimnasio">
+                        <span class="new-badge">¡NUEVO!</span>
+                    </div>
+                    <div class="arrival-info">
+                        <span class="arrival-cat">Bienestar</span>
+                        <h3>Studio Fit Colón</h3>
+                        <p>Entrenamiento funcional y yoga en un espacio totalmente renovado.</p>
+                        <div class="arrival-footer">
+                            <span class="arrival-date"><i data-lucide="calendar"></i> Abrió hace 10 días</span>
+                            <a href="#" class="btn-link"> <i data-lucide="chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrival-card">
+                    <div class="arrival-img">
+                        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400"
+                            alt="Tienda">
+                        <span class="new-badge">¡NUEVO!</span>
+                    </div>
+                    <div class="arrival-info">
+                        <span class="arrival-cat">Indumentaria</span>
+                        <h3>Tienda Raíces</h3>
+                        <p>Diseño local y sustentable con materiales 100% orgánicos.</p>
+                        <div class="arrival-footer">
+                            <span class="arrival-date"><i data-lucide="calendar"></i> Abrió este mes</span>
+                            <a href="#" class="btn-link"> <i data-lucide="chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrival-card">
+                    <div class="arrival-img">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=400"
+                            alt="Cafetería">
+                        <span class="new-badge">¡NUEVO!</span>
+                    </div>
+                    <div class="arrival-info">
+                        <span class="arrival-cat">Gastronomía</span>
+                        <h3>Café del Pasaje</h3>
+                        <p>Un nuevo concepto en café de especialidad y pastelería artesanal.</p>
+                        <div class="arrival-footer">
+                            <span class="arrival-date"><i data-lucide="calendar"></i> Abrió esta semana</span>
+                            <a href="#" class="btn-link"> <i data-lucide="chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrival-card">
+                    <div class="arrival-img">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=400"
+                            alt="Gimnasio">
+                        <span class="new-badge">¡NUEVO!</span>
+                    </div>
+                    <div class="arrival-info">
+                        <span class="arrival-cat">Bienestar</span>
+                        <h3>Studio Fit Colón</h3>
+                        <p>Entrenamiento funcional y yoga en un espacio totalmente renovado.</p>
+                        <div class="arrival-footer">
+                            <span class="arrival-date"><i data-lucide="calendar"></i> Abrió hace 10 días</span>
+                            <a href="#" class="btn-link"> <i data-lucide="chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrival-card">
+                    <div class="arrival-img">
+                        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400"
+                            alt="Tienda">
+                        <span class="new-badge">¡NUEVO!</span>
+                    </div>
+                    <div class="arrival-info">
+                        <span class="arrival-cat">Indumentaria</span>
+                        <h3>Tienda Raíces</h3>
+                        <p>Diseño local y sustentable con materiales 100% orgánicos.</p>
+                        <div class="arrival-footer">
+                            <span class="arrival-date"><i data-lucide="calendar"></i> Abrió este mes</span>
+                            <a href="#" class="btn-link"> <i data-lucide="chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <section class="essentials-section">
         <div class="container-slider-extra">
             <div class="slider-header">
@@ -1554,6 +1653,31 @@
             lucide.createIcons();
         }
     </script>
+    <!-- UNIVERSAL BOTTOM SHEET MODAL -->
+    <div id="universal-modal" class="modal-overlay" aria-hidden="true" style="display: none;">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-sheet" id="modal-sheet">
+            <button class="modal-close" id="modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header-placeholder">
+                    <h2>Detalles del Comercio</h2>
+                    <p>Cargando información ampliada...</p>
+                </div>
+                <div class="modal-body-placeholder">
+                    <!-- Dynamic content will ideally go here -->
+                    <p>Aquí se cargará dinámicamente el contenido detallado de cada tarjeta seleccionada en el futuro.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
