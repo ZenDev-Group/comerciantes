@@ -3596,16 +3596,14 @@ h2 span {
         /* Altura aproximada del header */
         left: 0;
         width: 100%;
-        background: white;
         padding: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
         transform: translateY(-20px);
         opacity: 0;
         pointer-events: none;
         transition: 0.3s ease;
         z-index: 900;
         margin: 0 !important;
-        border-bottom: 1px solid #eee;
     }
 
     /* Corrección de scroll para categorias */
