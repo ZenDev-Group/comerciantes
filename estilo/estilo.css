@@ -3779,6 +3779,10 @@ h2 span {
     color: var(--text-light);
 }
 
+header img {
+    display: none;
+}
+
 /* ---------------------------------------------------------------------------- */
 /* FLOATING HEADER (Refactor) */
 /* ---------------------------------------------------------------------------- */
@@ -3850,6 +3854,16 @@ h2 span {
         display: flex;
         position: static;
         /* It's inside flex now */
+    }
+
+    header img {
+        display: block;
+        max-width: 50vw;
+        margin: 15px auto 0px auto;
+    }
+
+    .blanco {
+        filter: grayscale(100%) brightness(5);
     }
 
 
