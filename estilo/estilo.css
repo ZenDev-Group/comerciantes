@@ -3411,9 +3411,10 @@ h2 span {
     }
 
     .main-header::before {
-        background-image: none;
-        background-color: white;
+        /* background-image: none; */
+        background-color: #e11d48;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        /* padding: 0px; */
     }
 
     /* 1. Header Superior Simplificado */
@@ -3867,5 +3868,9 @@ h2 span {
 
     .search-area-mini {
         display: none;
+    }
+
+    h1 {
+        font-size: 2rem;
     }
 }
