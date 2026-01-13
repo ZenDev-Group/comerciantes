@@ -184,7 +184,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* background-image: url(../imagenes/hero1.jpg); */
+    background-image: url(https://datasociety.net/wp-content/uploads/2024/07/Points-2-_Hero_1920x640-scaled.jpg);
     background-size: cover;
     background-position: center;
     transform: scale(var(--header-bg-scale, 1));
@@ -196,8 +196,8 @@ body {
     transition: opacity 0.5s ease;
     z-index: -1;
     pointer-events: none;
-    background-color: #c2c2c2;
-    background-blend-mode: luminosity;
+    background-color: #e11d48;
+    background-blend-mode: darken;
 }
 
 
@@ -227,6 +227,17 @@ body {
 .encabezado {
     margin: 0px auto;
     max-width: 750px;
+}
+
+.encabezado h2 {
+    color: white;
+    font-weight: 600;
+}
+
+.encabezado h3 {
+    color: white;
+    font-weight: 300;
+    margin-left: 10px;
 }
 
 /* EN: .main-header ... .brand ... */
@@ -701,7 +712,7 @@ body {
 
 h1 {
     font-size: 3.2rem;
-    color: var(--secondary);
+    color: white;
     font-weight: 700;
     margin: 10px;
 }
