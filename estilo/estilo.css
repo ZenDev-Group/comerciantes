@@ -649,9 +649,9 @@ body {
 }
 
 .agro-item:hover .category-icon {
-    background: var(--agro);
-    color: #ffffff;
-    border-color: var(--agro);
+
+    color: var(--agro);
+
 }
 
 /* =========================================
