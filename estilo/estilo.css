@@ -429,9 +429,7 @@ body {
         font-size: 0.8rem !important;
     }
 
-    .floating-header {
-        /* display: none; */
-    }
+
 
     .header-flex-container {
         flex-direction: row;
@@ -3545,9 +3543,7 @@ h2 span {
     }
 
     /* Adjust top padding since header is inside now */
-    #nav-menu {
-        /* padding-top: 0; */
-    }
+
 
     /* Estilos de links movil */
     #nav-menu li {
@@ -3856,10 +3852,7 @@ h2 span {
         /* It's inside flex now */
     }
 
-    .brand-mini {
-        /* display: none; */
-        /* Hide brand on mobile to save space for search */
-    }
+
 
     .search-area-mini input {
         font-size: 16px;
@@ -3872,5 +3865,12 @@ h2 span {
 
     h1 {
         font-size: 2rem;
+        text-align: center !important;
+        margin-top: 50px;
+    }
+
+    .encabezado h3 {
+        text-align: center !important;
+        margin-bottom: 50px;
     }
 }
