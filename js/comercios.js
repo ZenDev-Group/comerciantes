@@ -1,7 +1,9 @@
-// Conecta la guía a los datos reales de Web-MVP: categorías, listados y ficha de
-// comercio. Reemplaza el contenido de mockup (fotos de Unsplash, negocios inventados)
-// por comercios reales, y reutiliza el modal "universal" ya existente en el HTML
-// para mostrar la ficha completa en vez del placeholder inerte.
+// Conecta la guía a los datos reales de Web-MVP: categorías, listados y búsqueda.
+// Reemplaza el contenido de mockup (fotos de Unsplash, negocios inventados) por
+// comercios reales. Cada tarjeta es un link real a su ficha en single-comercio
+// (URL propia por comercio, indexable y compartible) en vez de abrir un modal.
+
+const URL_BASE_FICHA = 'https://single-comercio.vercel.app/comercio/';
 
 document.addEventListener('DOMContentLoaded', () => {
   const ICONO_CATEGORIA = {
@@ -20,20 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ------------------------------------------------------------------
   // Plantillas de tarjeta (misma clase/markup que ya usa el diseño premium,
-  // solo que ahora con datos reales en vez de hardcodeados).
+  // ahora como links reales <a> a la ficha del comercio en single-comercio).
   // ------------------------------------------------------------------
 
   function tarjetaPremium(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
-    const whatsapp = c.whatsapp
-      ? `<a href="https://wa.me/${c.whatsapp.replace(/\D/g, '')}" class="btn-wsp-p" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /><path d="M8 12h.01" /><path d="M12 12h.01" /><path d="M16 12h.01" />
-          </svg>
-        </a>`
-      : '';
     return `
-      <div class="business-card-premium" data-comercio-id="${c.id}" role="button" tabindex="0">
+      <a class="business-card-premium" href="${URL_BASE_FICHA}${c.id}">
         <span class="category-badge-p">${c.categoria_nombre || 'Comercio'}</span>
         ${destacado ? '<span class="cinta-destacado">Destacado</span>' : ''}
         ${c.foto_portada
@@ -44,16 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>${c.descripcion || ''}</p>
           <div class="card-actions">
             <span class="btn-ver-p">Ver comercio</span>
-            ${whatsapp}
           </div>
         </div>
-      </div>`;
+      </a>`;
   }
 
   function tarjetaGastro(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
     return `
-      <article class="g-item ${destacado ? 'gold' : ''}" data-comercio-id="${c.id}" role="button" tabindex="0">
+      <a class="g-item ${destacado ? 'gold' : ''}" href="${URL_BASE_FICHA}${c.id}">
         <div class="g-image">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -68,12 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="g-btn-wsp">Ver más</span>
           </div>
         </div>
-      </article>`;
+      </a>`;
   }
 
   function tarjetaArrival(c, etiqueta) {
     return `
-      <div class="arrival-card" data-comercio-id="${c.id}" role="button" tabindex="0">
+      <a class="arrival-card" href="${URL_BASE_FICHA}${c.id}">
         <div class="arrival-img">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -89,30 +83,30 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="btn-link"><i data-lucide="chevron-right"></i></span>
           </div>
         </div>
-      </div>`;
+      </a>`;
   }
 
   function tarjetaEssential(c, indiceColor) {
     return `
-      <div class="essential-card color-${indiceColor}" data-comercio-id="${c.id}" role="button" tabindex="0">
+      <a class="essential-card color-${indiceColor}" href="${URL_BASE_FICHA}${c.id}">
         <div class="essential-text">
           <span class="ess-tag">${c.categoria_nombre || 'Servicio'}</span>
           <h3>${c.nombre_negocio}</h3>
           <p>${c.descripcion || ''}</p>
-          <span class="ess-btn">Contactar</span>
+          <span class="ess-btn">Ver más</span>
         </div>
         <div class="essential-img">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
             : ''}
         </div>
-      </div>`;
+      </a>`;
   }
 
   function tarjetaResultado(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
     return `
-      <div class="resultado-card" data-comercio-id="${c.id}" role="button" tabindex="0">
+      <a class="resultado-card" href="${URL_BASE_FICHA}${c.id}">
         <div class="resultado-foto">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -127,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `<span class="resultado-loc"><i data-lucide="map-pin"></i> ${c.localidad_nombre}</span>`
             : ''}
         </div>
-      </div>`;
+      </a>`;
   }
 
   // ------------------------------------------------------------------
@@ -323,133 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.search-wrapper input').forEach(conectarBuscador);
-
-  // ------------------------------------------------------------------
-  // Ficha real del comercio (reemplaza el modal placeholder inerte)
-  // ------------------------------------------------------------------
-
-  const universalModal = document.getElementById('universal-modal');
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalSheet = document.getElementById('modal-sheet');
-  const modalContent = document.getElementById('modal-content');
-  const modalCloseBtn = document.getElementById('modal-close');
-
-  function abrirModal() {
-    if (!universalModal || !modalSheet || !modalBackdrop) return;
-    universalModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    if (typeof gsap !== 'undefined') {
-      gsap.set(modalBackdrop, { opacity: 0 });
-      gsap.set(modalSheet, { y: '100%' });
-      gsap.to(modalBackdrop, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-      gsap.to(modalSheet, { y: '0%', duration: 0.5, ease: 'power3.out' });
-    }
-  }
-
-  function cerrarModal() {
-    if (!universalModal) return;
-    const finalizar = () => {
-      universalModal.style.display = 'none';
-      document.body.style.overflow = '';
-    };
-    if (typeof gsap !== 'undefined') {
-      gsap.to(modalSheet, { y: '100%', duration: 0.4, ease: 'power2.in' });
-      gsap.to(modalBackdrop, { opacity: 0, duration: 0.3, onComplete: finalizar });
-    } else {
-      finalizar();
-    }
-  }
-
-  if (modalCloseBtn) modalCloseBtn.addEventListener('click', cerrarModal);
-  if (modalBackdrop) modalBackdrop.addEventListener('click', cerrarModal);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && universalModal && universalModal.style.display === 'block') cerrarModal();
-  });
-
-  function renderRedes(c) {
-    const redes = [];
-    if (c.instagram) {
-      redes.push(
-        `<a href="https://instagram.com/${c.instagram.replace('@', '')}" target="_blank" rel="noopener" class="ficha-red">Instagram</a>`
-      );
-    }
-    if (c.facebook) redes.push(`<a href="${c.facebook}" target="_blank" rel="noopener" class="ficha-red">Facebook</a>`);
-    if (c.sitio_web) redes.push(`<a href="${c.sitio_web}" target="_blank" rel="noopener" class="ficha-red">Sitio web</a>`);
-    return redes.length ? `<div class="ficha-redes">${redes.join('')}</div>` : '';
-  }
-
-  function renderFicha(c) {
-    const esPago = !!c.plan_info && c.plan_info.plan_slug !== 'gratuito';
-    const fotos = c.fotos && c.fotos.length ? c.fotos.map((f) => f.url) : c.foto_portada ? [c.foto_portada] : [];
-    const numeroWhatsapp = c.whatsapp ? c.whatsapp.replace(/\D/g, '') : null;
-    const mapaUrl =
-      c.latitud && c.longitud
-        ? `https://www.google.com/maps/search/?api=1&query=${c.latitud},${c.longitud}`
-        : null;
-
-    return `
-      <div class="ficha-comercio ${esPago ? 'ficha-con-cta' : ''}">
-        ${
-          fotos.length
-            ? `<div class="ficha-galeria">${fotos.map((url) => `<img src="${url}" alt="${c.nombre_negocio}" loading="lazy">`).join('')}</div>`
-            : `<div class="ficha-galeria-vacia"><i data-lucide="store"></i></div>`
-        }
-
-        <div class="ficha-fila-categoria">
-          <span class="ficha-categoria">${c.categoria_nombre || 'Comercio'}</span>
-          ${esPago ? '<span class="ficha-badge-destacado"><i data-lucide="star"></i> Destacado</span>' : ''}
-        </div>
-        <h2 class="ficha-nombre">${c.nombre_negocio}</h2>
-        ${c.localidad_nombre ? `<p class="ficha-localidad"><i data-lucide="map-pin"></i> ${c.localidad_nombre}</p>` : ''}
-        ${c.descripcion ? `<p class="ficha-descripcion">${c.descripcion}</p>` : ''}
-
-        ${c.horarios ? `<div class="ficha-bloque"><h4>Horarios</h4><p>${c.horarios}</p></div>` : ''}
-        <div class="ficha-bloque"><h4>Ubicación</h4><p>${c.direccion || 'Colón, Buenos Aires'}</p></div>
-
-        ${renderRedes(c)}
-
-        ${
-          !esPago
-            ? '<p class="ficha-aviso-freemium">Este comercio todavía no tiene contacto directo habilitado.</p>'
-            : `<div class="ficha-cta-bar">
-                <a href="tel:${c.telefono}" class="ficha-cta-btn"><i data-lucide="phone"></i> Llamar</a>
-                ${numeroWhatsapp ? `<a href="https://wa.me/${numeroWhatsapp}" target="_blank" rel="noopener" class="ficha-cta-btn ficha-cta-whatsapp"><i data-lucide="message-circle"></i> WhatsApp</a>` : ''}
-                ${mapaUrl ? `<a href="${mapaUrl}" target="_blank" rel="noopener" class="ficha-cta-btn"><i data-lucide="navigation"></i> Cómo llegar</a>` : ''}
-              </div>`
-        }
-      </div>`;
-  }
-
-  async function abrirFicha(id) {
-    abrirModal();
-    modalContent.innerHTML = `
-      <div class="ficha-cargando">
-        <div class="ficha-galeria-vacia"></div>
-      </div>`;
-    try {
-      const comercio = await fetchComercio(id);
-      modalContent.innerHTML = renderFicha(comercio);
-      refrescarIconos();
-    } catch (e) {
-      modalContent.innerHTML = '<p class="sin-resultados">No pudimos cargar este comercio. Probá de nuevo en un momento.</p>';
-    }
-  }
-
-  // Delegación de eventos: cualquier tarjeta renderizada con datos reales
-  // (ahora o en el futuro) abre la ficha real, sin importar en qué sección esté.
-  document.body.addEventListener('click', (e) => {
-    const tarjeta = e.target.closest('[data-comercio-id]');
-    if (!tarjeta) return;
-    e.preventDefault();
-    e.stopPropagation();
-    abrirFicha(tarjeta.dataset.comercioId);
-  });
-  document.body.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
-    const tarjeta = e.target.closest('[data-comercio-id]');
-    if (!tarjeta) return;
-    abrirFicha(tarjeta.dataset.comercioId);
-  });
 
   // Enlace "+ Sumar mi Comercio" -> alta real en Web-MVP.
   document.querySelectorAll('.btn-add-biz').forEach((a) => {

@@ -4270,3 +4270,14 @@ h2 span {
         height: 180px;
     }
 }
+
+/* Las tarjetas ahora son <a> reales (URL propia por comercio en single-comercio)
+   en vez de <div> - se resetea el estilo de link por defecto del navegador. */
+.business-card-premium,
+.g-item,
+.arrival-card,
+.essential-card,
+.resultado-card {
+    text-decoration: none;
+    color: inherit;
+}
