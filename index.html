@@ -10,7 +10,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilo/estilo.css">
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -160,6 +160,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Resultados de búsqueda / filtro por categoría (datos reales) -->
+    <section id="resultados-busqueda" class="resultados-section" style="display:none;">
+        <div class="container">
+            <div class="resultados-header">
+                <div>
+                    <span class="resultados-eyebrow">Resultados</span>
+                    <h2 id="resultados-titulo">Comercios</h2>
+                </div>
+                <button id="resultados-cerrar" class="btn-cerrar-resultados">
+                    <i data-lucide="x"></i> Volver al inicio
+                </button>
+            </div>
+            <div class="resultados-grid" id="resultados-grid"></div>
+        </div>
+    </section>
+
     <section class="business-slider-section">
         <div class="container-slider-extra">
 
@@ -383,12 +400,6 @@
                         gastronómica.</p>
                 </div>
 
-                <div class="filter-group">
-                    <button class="f-link active" data-filter="all">Todos</button>
-                    <button class="f-link" data-filter="parrilla">Parrilla</button>
-                    <button class="f-link" data-filter="cafe">Cafecito</button>
-                    <button class="f-link" data-filter="restaurante">Gourmet</button>
-                </div>
             </div>
         </div>
 
@@ -646,7 +657,7 @@
                 <p>Lo nuevo, lo fresco y lo que tenés que conocer antes que nadie. ¡Dales la bienvenida!</p>
             </div>
 
-            <div class="arrivals-grid">
+            <div class="arrivals-grid" id="arrivalsGridRecientes">
 
                 <div class="arrival-card">
                     <div class="arrival-img">
@@ -918,7 +929,7 @@
                 <p>Mimos para vos, cambios de look y las mejores vidrieras de moda. Porque te lo merecés.</p>
             </div>
 
-            <div class="arrivals-grid">
+            <div class="arrivals-grid" id="arrivalsGridModa">
 
                 <div class="arrival-card">
                     <div class="arrival-img">
@@ -1689,6 +1700,8 @@
             lucide.createIcons();
         }
     </script>
+    <script src="js/api.js"></script>
+    <script src="js/comercios.js"></script>
     <!-- UNIVERSAL BOTTOM SHEET MODAL -->
     <div id="universal-modal" class="modal-overlay" aria-hidden="true" style="display: none;">
         <div class="modal-backdrop" id="modal-backdrop"></div>

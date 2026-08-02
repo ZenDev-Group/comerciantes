@@ -3,7 +3,7 @@
 /* ---------------------------------------------------------------------------- */
 :root {
     --primary: #e11d48;
-    --primary-rgb: 0, 97, 255;
+    --primary-rgb: 225, 29, 72;
     /* Agregado para utilidades de transparencia */
     --secondary: #1e272e;
     --agro: #00b894;
@@ -3882,5 +3882,387 @@ h2 span {
     .encabezado h3 {
         text-align: center !important;
         margin-bottom: 50px;
+    }
+}
+
+/* ---------------------------------------------------------------------------- */
+/* DATOS REALES: estados vacíos, badge de destacado, resultados y ficha         */
+/* ---------------------------------------------------------------------------- */
+.foto-vacia-p {
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    color: #c7c7c7;
+}
+
+.foto-vacia-p i {
+    width: 32px;
+    height: 32px;
+}
+
+.sin-resultados {
+    width: 100%;
+    text-align: center;
+    color: var(--text-light);
+    padding: 40px 20px;
+    font-size: 0.95rem;
+}
+
+.cinta-destacado {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--secondary);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    z-index: 2;
+}
+
+/* Resultados de búsqueda / categoría - grilla estilo Airbnb: imagen primero,
+   tarjetas planas con sombra mínima y elevación al pasar el mouse. */
+.resultados-section {
+    padding: 60px 0;
+    background: var(--bg-body);
+}
+
+.resultados-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.resultados-eyebrow {
+    display: block;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.resultados-header h2 {
+    font-size: 1.8rem;
+    color: var(--secondary);
+    margin: 0;
+}
+
+.btn-cerrar-resultados {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    color: var(--secondary);
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-cerrar-resultados:hover {
+    background: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+.btn-cerrar-resultados i {
+    width: 16px;
+    height: 16px;
+}
+
+.resultados-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .resultados-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .resultados-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .resultados-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.resultado-card {
+    cursor: pointer;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+}
+
+.resultado-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.resultado-foto {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #f0f0f0;
+    overflow: hidden;
+}
+
+.resultado-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.resultado-card:hover .resultado-foto img {
+    transform: scale(1.06);
+}
+
+.resultado-info {
+    padding: 16px;
+}
+
+.resultado-categoria {
+    display: block;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.resultado-info h3 {
+    font-size: 1rem;
+    color: var(--secondary);
+    margin-bottom: 6px;
+}
+
+.resultado-info p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.resultado-loc {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    color: #9aa0a6;
+}
+
+.resultado-loc i {
+    width: 13px;
+    height: 13px;
+}
+
+/* Ficha real de comercio (dentro del modal universal) */
+.ficha-cargando .foto-vacia-p {
+    height: 220px;
+    background: #eee;
+}
+
+.ficha-galeria {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin: -40px -30px 20px -30px;
+    padding: 0 30px;
+    scroll-snap-type: x mandatory;
+}
+
+.ficha-galeria img {
+    scroll-snap-align: start;
+    width: 320px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    flex-shrink: 0;
+}
+
+.ficha-galeria-vacia {
+    margin: -40px -30px 20px -30px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    color: #c7c7c7;
+}
+
+.ficha-fila-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ficha-categoria {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ficha-badge-destacado {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.ficha-badge-destacado i {
+    width: 12px;
+    height: 12px;
+}
+
+.ficha-nombre {
+    font-size: 1.6rem;
+    color: var(--secondary);
+    margin: 6px 0 4px;
+}
+
+.ficha-localidad {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.ficha-localidad i {
+    width: 14px;
+    height: 14px;
+}
+
+.ficha-descripcion {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.ficha-bloque {
+    margin-top: 18px;
+}
+
+.ficha-bloque h4 {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.ficha-bloque p {
+    color: var(--text-light);
+}
+
+.ficha-redes {
+    display: flex;
+    gap: 18px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.ficha-red {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ficha-red:hover {
+    text-decoration: underline;
+}
+
+.ficha-aviso-freemium {
+    margin-top: 24px;
+    color: #9aa0a6;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.ficha-cta-bar {
+    position: sticky;
+    bottom: -40px;
+    margin: 24px -30px -40px -30px;
+    padding: 14px 30px;
+    display: flex;
+    gap: 10px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.ficha-cta-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 30px;
+    background: #f4f4f4;
+    color: var(--secondary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.ficha-cta-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.ficha-cta-btn:hover {
+    background: var(--secondary);
+    color: white;
+}
+
+.ficha-cta-whatsapp {
+    background: #25d366;
+    color: white;
+}
+
+.ficha-cta-whatsapp:hover {
+    background: #1da851;
+}
+
+@media (max-width: 767px) {
+    .ficha-galeria img {
+        width: 260px;
+        height: 180px;
     }
 }
