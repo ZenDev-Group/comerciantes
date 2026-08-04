@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="essential-img">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
-            : ''}
+            : `<div class="foto-vacia-p"><i data-lucide="wrench"></i></div>`}
         </div>
       </a>`;
   }
