@@ -125,6 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------
+  // Tracking de "Ver más" (sección 5.2 del plan) - se dispara solo en tarjetas
+  // de comercios SIN plan premium (el listado gratis es la fricción a medir
+  // para el reporte de "clics perdidos"). No bloquea el click ni el href real:
+  // el evento se registra de paso y la navegación a la ficha sigue normal.
+  // ------------------------------------------------------------------
+
+  function conectarTrackingVerMas(cont, lista) {
+    if (!cont || !Array.isArray(lista)) return;
+    const links = cont.querySelectorAll(`a[href^="${URL_BASE_FICHA}"]`);
+    links.forEach((link, i) => {
+      const c = lista[i];
+      if (!c) return;
+      const esPremium = typeof c.plan === 'string' && c.plan.startsWith('premium');
+      if (esPremium) return;
+      link.addEventListener('click', () => {
+        registrarEvento('click_ver_mas', { comercio_id: c.id, origen: 'comerciantes' });
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------
   // Carga de secciones reales (reemplazan el contenido hardcodeado)
   // ------------------------------------------------------------------
 
@@ -140,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const lista = destacados.length ? destacados : todos.slice(0, 8);
       cont.innerHTML = lista.map(tarjetaPremium).join('') || '<p class="sin-resultados">Todavía no hay comercios cargados.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(cont, lista);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar los comercios destacados.</p>';
     }
@@ -152,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'gastronomia' });
       cont.innerHTML = comercios.map(tarjetaGastro).join('') || '<p class="sin-resultados">Todavía no hay comercios gastronómicos cargados.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de gastronomía.</p>';
     }
@@ -165,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const recientes = [...todos].sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 8);
       cont.innerHTML = recientes.map((c) => tarjetaArrival(c, '¡NUEVO EN LA GUÍA!')).join('') || '<p class="sin-resultados">Todavía no hay comercios cargados.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(cont, recientes);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar los últimos comercios sumados.</p>';
     }
@@ -177,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'indumentaria' });
       cont.innerHTML = comercios.map((c) => tarjetaArrival(c)).join('') || '<p class="sin-resultados">Todavía no hay comercios de indumentaria cargados.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de indumentaria.</p>';
     }
@@ -189,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'servicios' });
       cont.innerHTML = comercios.map((c, i) => tarjetaEssential(c, (i % 6) + 1)).join('') || '<p class="sin-resultados">Todavía no hay servicios cargados.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de servicios.</p>';
     }
@@ -278,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ? comercios.map(tarjetaResultado).join('')
         : '<p class="sin-resultados">No encontramos comercios que coincidan con tu búsqueda.</p>';
       refrescarIconos();
+      conectarTrackingVerMas(resultadosGrid, comercios);
     } catch (e) {
       resultadosGrid.innerHTML = '<p class="sin-resultados">No pudimos cargar los resultados. Revisá tu conexión.</p>';
     }
@@ -306,12 +333,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resultadosSection) resultadosSection.style.display = 'none';
         return;
       }
-      temporizador = setTimeout(() => mostrarResultados(null, null, valor), 400);
+      temporizador = setTimeout(() => {
+        registrarEvento('busqueda', { termino_busqueda: valor, origen: 'comerciantes' });
+        mostrarResultados(null, null, valor);
+      }, 400);
     });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        if (input.value.trim()) mostrarResultados(null, null, input.value.trim());
+        const valor = input.value.trim();
+        if (valor) {
+          if (temporizador) clearTimeout(temporizador);
+          registrarEvento('busqueda', { termino_busqueda: valor, origen: 'comerciantes' });
+          mostrarResultados(null, null, valor);
+        }
       }
     });
   }

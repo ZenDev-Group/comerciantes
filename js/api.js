@@ -28,3 +28,19 @@ function fetchComercio(id) {
 function fetchCategorias() {
   return apiGet('/api/categorias');
 }
+
+// Registra un evento de tracking (búsqueda, clic en "Ver más", clic de contacto, etc.) - sección
+// 5.2 del plan de tarjetas/landing, alimenta el reporte de "clics perdidos" y el Panel de
+// Estadísticas Premium. Nunca debe romper la UI si falla: es fire-and-forget.
+function registrarEvento(tipo, { comercio_id, termino_busqueda, origen } = {}) {
+  try {
+    fetch(`${API_BASE_URL}/api/tracking/evento`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tipo, comercio_id, termino_busqueda, origen }),
+      keepalive: true
+    }).catch(() => {});
+  } catch (e) {
+    // Nunca bloquear la navegación real del usuario por un evento de analítica.
+  }
+}
