@@ -1485,9 +1485,21 @@ h2 span {
 
 .g-meta h3 {
     font-size: var(--fs-card-title);
-    margin: 5px 0 10px 0;
+    margin: 5px 0 4px 0;
     font-weight: 600;
     color: var(--secondary);
+}
+
+.g-meta p {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .g-footer {

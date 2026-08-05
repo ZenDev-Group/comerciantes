@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="g-meta">
           <span class="g-type">${c.categoria_nombre || 'Gastronomía'}</span>
           <h3>${c.nombre_negocio}</h3>
+          <p>${c.descripcion || ''}</p>
           <div class="g-footer">
             <span class="g-loc">${c.localidad_nombre || c.direccion || 'Colón'}</span>
             <span class="g-btn-wsp">Ver más</span>
