@@ -175,9 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function abrirModalFichaGratis(c) {
     comercioModalActual = c;
 
+    // Portada de doble capa: fondo desenfocado (cubre todo el ancho sin importar la
+    // proporción de la foto real) + la misma imagen nítida flotando encima, en vez de
+    // recortarla a la fuerza con object-fit:cover (que rompía logos verticales/cuadrados).
     const fotoCont = document.getElementById('modal-ficha-foto');
     fotoCont.innerHTML = c.foto_portada
-      ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
+      ? `<div class="ficha-portada-bg" style="background-image: url('${c.foto_portada}')"></div>
+         <img class="ficha-portada-logo" src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
       : `<div class="foto-vacia-p"><i data-lucide="store"></i></div>`;
 
     document.getElementById('modal-ficha-categoria').textContent = c.categoria_nombre || 'Comercio';
@@ -200,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       c.descripcion || 'Todavía no cargó una descripción en la guía.';
 
     // Reset del bloque de reclamo cada vez que se abre para un comercio distinto.
-    document.getElementById('modal-btn-reclamar').style.display = 'block';
+    document.getElementById('modal-btn-reclamar').style.display = 'flex'; // .reclamar-perfil-btn es flex (icono + texto)
     const form = document.getElementById('modal-form-reclamar');
     form.reset();
     form.style.display = 'none';
@@ -245,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         await reclamarPerfil(comercioModalActual.id, { nombre, telefono, email, mensaje });
         form.style.display = 'none';
-        exitoEl.style.display = 'block';
+        exitoEl.style.display = 'flex'; // .reclamar-exito es flex-column, no block
       } catch (err) {
         errorEl.textContent = err.message || 'No pudimos enviar el reclamo, probá de nuevo.';
         errorEl.style.display = 'block';

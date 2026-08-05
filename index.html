@@ -1689,7 +1689,8 @@
     <div id="universal-modal" class="modal-overlay" aria-hidden="true" style="display: none;">
         <div class="modal-backdrop" id="modal-backdrop"></div>
         <div class="modal-sheet" id="modal-sheet">
-            <button class="modal-close" id="modal-close">
+            <div class="modal-drag-handle"></div>
+            <button class="modal-close" id="modal-close" aria-label="Cerrar modal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1712,10 +1713,16 @@
                 </div>
                 <div class="modal-body-placeholder">
                     <p class="ficha-descripcion" id="modal-ficha-descripcion"></p>
-                    <p class="ficha-aviso-freemium">Este comercio todavía no tiene contacto directo habilitado.</p>
+
+                    <div class="ficha-aviso-freemium" id="modal-ficha-aviso">
+                        <i data-lucide="lock" class="icono-candado"></i>
+                        <p>Este comercio cuenta con una ficha básica gratuita. Si sos el dueño, podés reclamarla para habilitar el contacto directo por WhatsApp, teléfono y redes sociales.</p>
+                    </div>
 
                     <div class="ficha-reclamo-bloque">
-                        <button type="button" id="modal-btn-reclamar" class="reclamar-perfil-btn">¿Sos el dueño de este comercio? Reclamá tu perfil</button>
+                        <button type="button" id="modal-btn-reclamar" class="reclamar-perfil-btn">
+                            <i data-lucide="shield-check"></i> ¿Sos el dueño de este comercio? Reclamá tu perfil
+                        </button>
                         <form id="modal-form-reclamar" style="display:none;">
                             <label for="modal-reclamar-nombre">Tu nombre</label>
                             <input type="text" id="modal-reclamar-nombre" required>
@@ -1728,7 +1735,11 @@
                             <p id="modal-reclamar-error" class="reclamar-error" style="display:none;"></p>
                             <button type="submit" class="reclamar-perfil-btn">Enviar reclamo</button>
                         </form>
-                        <p id="modal-reclamar-exito" style="display:none;">¡Listo! Te vamos a contactar a la brevedad.</p>
+                        <div id="modal-reclamar-exito" class="reclamar-exito" style="display:none;">
+                            <i data-lucide="check-circle" style="color: #22c55e; width: 40px; height: 40px; margin-bottom: 10px;"></i>
+                            <h3>¡Reclamo enviado con éxito!</h3>
+                            <p>Nos contactaremos a la brevedad para verificar la titularidad del comercio.</p>
+                        </div>
                     </div>
 
                     <a href="https://comerciantes-web-mvp.vercel.app/suscripciones.html" target="_blank" class="ficha-red" style="display:inline-block;margin-top:18px;">Conocé el Plan Premium →</a>

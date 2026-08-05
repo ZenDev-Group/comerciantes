@@ -3814,27 +3814,44 @@ h2 span {
     }
 }
 
+/* Tirador decorativo de la bottom sheet */
+.modal-drag-handle {
+    width: 45px;
+    height: 4px;
+    background: #cbd5e1;
+    border-radius: 10px;
+    margin: 12px auto 0 auto;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
 .modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #f1f1f1;
-    border: none;
-    width: 36px;
-    height: 36px;
+    top: 15px;
+    right: 15px;
+    background: rgba(15, 23, 42, 0.5) !important;
+    color: var(--white) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
-    transition: 0.2s;
-    color: var(--text-dark);
+    z-index: 11;
+    transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-    background: #e2e2e2;
-    transform: rotate(90deg);
+    background: rgba(15, 23, 42, 0.8) !important;
+    transform: scale(1.08) rotate(90deg);
+}
+
+.modal-close svg {
+    width: 18px;
+    height: 18px;
 }
 
 .modal-content {
@@ -3847,8 +3864,11 @@ h2 span {
 
 .modal-header-placeholder h2 {
     font-size: 1.8rem;
+    font-weight: 700;
     color: var(--secondary);
-    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.25;
 }
 
 .modal-body-placeholder {
@@ -4212,11 +4232,16 @@ h2 span {
 }
 
 .ficha-categoria {
-    color: var(--primary);
+    display: inline-block;
+    font-size: 0.72rem;
     font-weight: 700;
-    font-size: 0.75rem;
+    color: var(--primary);
+    background: rgba(225, 29, 72, 0.08);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
 }
 
 .ficha-badge-destacado {
@@ -4245,21 +4270,23 @@ h2 span {
 .ficha-localidad {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     color: var(--text-light);
-    font-size: 0.9rem;
-    margin-bottom: 12px;
+    font-size: 0.85rem;
+    margin-top: 6px;
 }
 
-.ficha-localidad i {
+.ficha-localidad i,
+.ficha-localidad svg {
     width: 14px;
     height: 14px;
 }
 
 .ficha-descripcion {
-    color: var(--text-dark);
+    font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 10px;
+    color: #475569;
+    margin-bottom: 24px;
 }
 
 .ficha-bloque {
@@ -4294,10 +4321,26 @@ h2 span {
 }
 
 .ficha-aviso-freemium {
-    margin-top: 24px;
-    color: #9aa0a6;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 24px 0;
     font-size: 0.85rem;
-    font-style: italic;
+    color: #64748b;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.5;
+}
+
+.ficha-aviso-freemium i.icono-candado,
+.ficha-aviso-freemium svg.icono-candado {
+    color: #94a3b8;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .ficha-cta-bar {
@@ -4352,65 +4395,114 @@ h2 span {
     }
 }
 
-/* Portada única (ficha gratis en el modal) - mismo criterio de bleed que .ficha-galeria-vacia */
+/* Portada con doble capa: fondo desenfocado y logo nítido en el centro
+   (reemplaza el bleed simple con object-fit:cover, que recortaba mal logos
+   verticales/cuadrados en vez de fotos panorámicas) */
 .ficha-portada-modal {
     position: relative;
     margin: -40px -30px 20px -30px;
-    height: 220px;
+    height: 240px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e293b;
 }
 
-.ficha-portada-modal img {
+.ficha-portada-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    filter: blur(16px) brightness(0.6);
+    transform: scale(1.1);
+    /* evita bordes claros por el blur */
+    z-index: 1;
+}
+
+.ficha-portada-logo {
+    position: relative;
+    max-height: 85%;
+    max-width: 85%;
+    object-fit: contain;
+    z-index: 2;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* "¿Sos el dueño? Reclamá tu perfil" dentro del modal de ficha gratis */
 .ficha-reclamo-bloque {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid #eee;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
 }
 
 .reclamar-perfil-btn {
     background: var(--secondary);
     color: var(--white);
-    padding: 12px 20px;
+    padding: 14px 24px;
     border: none;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(30, 39, 46, 0.15);
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .reclamar-perfil-btn:hover {
     background: var(--primary);
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
+    transform: translateY(-2px);
+}
+
+.reclamar-perfil-btn i,
+.reclamar-perfil-btn svg {
+    width: 18px;
+    height: 18px;
 }
 
 .ficha-reclamo-bloque form {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: 14px;
+    gap: 6px;
+    margin-top: 18px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
 }
 
 .ficha-reclamo-bloque label {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--text-dark);
-    margin-top: 8px;
+    color: var(--secondary);
+    margin-top: 6px;
 }
 
 .ficha-reclamo-bloque input,
 .ficha-reclamo-bloque textarea {
-    padding: 9px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
     font-family: inherit;
     font-size: 0.85rem;
+    transition: border-color 0.2s ease;
+}
+
+.ficha-reclamo-bloque input:focus,
+.ficha-reclamo-bloque textarea:focus {
+    outline: none;
+    border-color: var(--primary);
 }
 
 .ficha-reclamo-bloque button[type="submit"] {
@@ -4421,6 +4513,30 @@ h2 span {
     color: #dc2626;
     font-size: 0.78rem;
     margin-top: 6px;
+}
+
+/* Pantalla de éxito tras enviar el reclamo */
+.reclamar-exito {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 24px;
+    border-radius: 16px;
+    margin-top: 18px;
+}
+
+.reclamar-exito h3 {
+    color: #166534;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.reclamar-exito p {
+    color: #16a34a;
+    font-size: 0.85rem;
 }
 
 /* Las tarjetas ahora son <a> reales (URL propia por comercio en single-comercio)
