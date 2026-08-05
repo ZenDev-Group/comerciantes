@@ -4352,6 +4352,77 @@ h2 span {
     }
 }
 
+/* Portada única (ficha gratis en el modal) - mismo criterio de bleed que .ficha-galeria-vacia */
+.ficha-portada-modal {
+    position: relative;
+    margin: -40px -30px 20px -30px;
+    height: 220px;
+    overflow: hidden;
+}
+
+.ficha-portada-modal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* "¿Sos el dueño? Reclamá tu perfil" dentro del modal de ficha gratis */
+.ficha-reclamo-bloque {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+}
+
+.reclamar-perfil-btn {
+    background: var(--secondary);
+    color: var(--white);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.reclamar-perfil-btn:hover {
+    background: var(--primary);
+}
+
+.ficha-reclamo-bloque form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 14px;
+}
+
+.ficha-reclamo-bloque label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-top: 8px;
+}
+
+.ficha-reclamo-bloque input,
+.ficha-reclamo-bloque textarea {
+    padding: 9px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.85rem;
+}
+
+.ficha-reclamo-bloque button[type="submit"] {
+    margin-top: 14px;
+}
+
+.reclamar-error {
+    color: #dc2626;
+    font-size: 0.78rem;
+    margin-top: 6px;
+}
+
 /* Las tarjetas ahora son <a> reales (URL propia por comercio en single-comercio)
    en vez de <div> - se resetea el estilo de link por defecto del navegador. */
 .business-card-premium,

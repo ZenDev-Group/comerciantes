@@ -1697,14 +1697,41 @@
                 </svg>
             </button>
             <div class="modal-content" id="modal-content">
+                <div class="ficha-portada-modal" id="modal-ficha-foto"></div>
                 <div class="modal-header-placeholder">
-                    <h2>Detalles del Comercio</h2>
-                    <p>Cargando información ampliada...</p>
+                    <div class="ficha-fila-categoria">
+                        <span class="ficha-categoria" id="modal-ficha-categoria">Comercio</span>
+                        <span class="ficha-badge-destacado" id="modal-ficha-badge" style="display:none;">
+                            <i data-lucide="star"></i> Destacado
+                        </span>
+                    </div>
+                    <h2 class="ficha-nombre" id="modal-ficha-nombre"></h2>
+                    <div class="ficha-localidad" id="modal-ficha-localidad" style="display:none;">
+                        <i data-lucide="map-pin"></i><span id="modal-ficha-localidad-texto"></span>
+                    </div>
                 </div>
                 <div class="modal-body-placeholder">
-                    <!-- Dynamic content will ideally go here -->
-                    <p>Aquí se cargará dinámicamente el contenido detallado de cada tarjeta seleccionada en el futuro.
-                    </p>
+                    <p class="ficha-descripcion" id="modal-ficha-descripcion"></p>
+                    <p class="ficha-aviso-freemium">Este comercio todavía no tiene contacto directo habilitado.</p>
+
+                    <div class="ficha-reclamo-bloque">
+                        <button type="button" id="modal-btn-reclamar" class="reclamar-perfil-btn">¿Sos el dueño de este comercio? Reclamá tu perfil</button>
+                        <form id="modal-form-reclamar" style="display:none;">
+                            <label for="modal-reclamar-nombre">Tu nombre</label>
+                            <input type="text" id="modal-reclamar-nombre" required>
+                            <label for="modal-reclamar-telefono">Teléfono</label>
+                            <input type="tel" id="modal-reclamar-telefono">
+                            <label for="modal-reclamar-email">Email</label>
+                            <input type="email" id="modal-reclamar-email">
+                            <label for="modal-reclamar-mensaje">Mensaje (opcional)</label>
+                            <textarea id="modal-reclamar-mensaje" rows="2"></textarea>
+                            <p id="modal-reclamar-error" class="reclamar-error" style="display:none;"></p>
+                            <button type="submit" class="reclamar-perfil-btn">Enviar reclamo</button>
+                        </form>
+                        <p id="modal-reclamar-exito" style="display:none;">¡Listo! Te vamos a contactar a la brevedad.</p>
+                    </div>
+
+                    <a href="https://comerciantes-web-mvp.vercel.app/suscripciones.html" target="_blank" class="ficha-red" style="display:inline-block;margin-top:18px;">Conocé el Plan Premium →</a>
                 </div>
             </div>
         </div>

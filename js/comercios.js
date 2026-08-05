@@ -1,7 +1,8 @@
 // Conecta la guía a los datos reales de Web-MVP: categorías, listados y búsqueda.
 // Reemplaza el contenido de mockup (fotos de Unsplash, negocios inventados) por
-// comercios reales. Cada tarjeta es un link real a su ficha en single-comercio
-// (URL propia por comercio, indexable y compartible) en vez de abrir un modal.
+// comercios reales. Un comercio PREMIUM es un link real a su ficha completa en
+// single-comercio (URL propia, indexable y compartible); un comercio sin ficha
+// completa abre acá mismo el modal de "ficha gratis" (ver conectarInteraccionTarjetas).
 
 const URL_BASE_FICHA = 'https://single-comercio.vercel.app/comercio/';
 
@@ -25,10 +26,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // ahora como links reales <a> a la ficha del comercio en single-comercio).
   // ------------------------------------------------------------------
 
+  // Un comercio SIN plan premium no tiene ficha completa en single-comercio (server-side
+  // gate) - su tarjeta ya no navega ahí, abre el modal de ficha gratis en esta misma página
+  // (sección 2 del plan de tarjetas/landing). El href real solo se arma para comercios
+  // premium; el resto queda con "#" como no-op de respaldo si el JS tardara en engancharse.
+  function esPremiumReal(c) {
+    return typeof c.plan === 'string' && c.plan.startsWith('premium');
+  }
+
+  function hrefTarjeta(c) {
+    return esPremiumReal(c) ? `${URL_BASE_FICHA}${c.id}` : '#';
+  }
+
   function tarjetaPremium(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
     return `
-      <a class="business-card-premium" href="${URL_BASE_FICHA}${c.id}">
+      <a class="business-card-premium tarjeta-comercio" href="${hrefTarjeta(c)}">
         <span class="category-badge-p">${c.categoria_nombre || 'Comercio'}</span>
         ${destacado ? '<span class="cinta-destacado">Destacado</span>' : ''}
         ${c.foto_portada
@@ -47,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function tarjetaGastro(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
     return `
-      <a class="g-item ${destacado ? 'gold' : ''}" href="${URL_BASE_FICHA}${c.id}">
+      <a class="g-item tarjeta-comercio ${destacado ? 'gold' : ''}" href="${hrefTarjeta(c)}">
         <div class="g-image">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -68,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function tarjetaArrival(c, etiqueta) {
     return `
-      <a class="arrival-card" href="${URL_BASE_FICHA}${c.id}">
+      <a class="arrival-card tarjeta-comercio" href="${hrefTarjeta(c)}">
         <div class="arrival-img">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -89,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function tarjetaEssential(c, indiceColor) {
     return `
-      <a class="essential-card color-${indiceColor}" href="${URL_BASE_FICHA}${c.id}">
+      <a class="essential-card tarjeta-comercio color-${indiceColor}" href="${hrefTarjeta(c)}">
         <div class="essential-text">
           <span class="ess-tag">${c.categoria_nombre || 'Servicio'}</span>
           <h3>${c.nombre_negocio}</h3>
@@ -107,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function tarjetaResultado(c) {
     const destacado = c.plan && c.plan !== 'gratuito';
     return `
-      <a class="resultado-card" href="${URL_BASE_FICHA}${c.id}">
+      <a class="resultado-card tarjeta-comercio" href="${hrefTarjeta(c)}">
         <div class="resultado-foto">
           ${c.foto_portada
             ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
@@ -126,25 +139,120 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------
-  // Tracking de "Ver más" (sección 5.2 del plan) - se dispara solo en tarjetas
-  // de comercios SIN plan premium (el listado gratis es la fricción a medir
-  // para el reporte de "clics perdidos"). No bloquea el click ni el href real:
-  // el evento se registra de paso y la navegación a la ficha sigue normal.
+  // Interacción de las tarjetas: un comercio PREMIUM navega de verdad a su
+  // ficha completa en single-comercio (URL propia, indexable, compartible).
+  // Un comercio SIN ficha completa (gratuito/destacado) abre en su lugar el
+  // modal de "ficha gratis" acá mismo, con solo la info que permite ese plan
+  // (sección 2 del plan de tarjetas/landing) - evita mandarlo a una pantalla
+  // de upsell en otro dominio por un clic que no lo esperaba.
+  // Cada clic sobre una tarjeta no-premium también cuenta como "clic perdido"
+  // (sección 5.2) para el reporte del admin.
   // ------------------------------------------------------------------
 
-  function conectarTrackingVerMas(cont, lista) {
+  function conectarInteraccionTarjetas(cont, lista) {
     if (!cont || !Array.isArray(lista)) return;
-    const links = cont.querySelectorAll(`a[href^="${URL_BASE_FICHA}"]`);
+    const links = cont.querySelectorAll('a.tarjeta-comercio');
     links.forEach((link, i) => {
       const c = lista[i];
-      if (!c) return;
-      const esPremium = typeof c.plan === 'string' && c.plan.startsWith('premium');
-      if (esPremium) return;
-      link.addEventListener('click', () => {
+      if (!c || esPremiumReal(c)) return; // navegación real a la ficha, sin modal
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
         registrarEvento('click_ver_mas', { comercio_id: c.id, origen: 'comerciantes' });
+        abrirModalFichaGratis(c);
       });
     });
   }
+
+  // ------------------------------------------------------------------
+  // Modal de "ficha gratis" (bottom sheet ya existente en el HTML/CSS,
+  // antes sin usar) - solo la info que la matriz del plan permite en el
+  // plan gratuito: foto/logo, categoría, nombre, dirección y descripción.
+  // Sin WhatsApp/llamar/mapa/galería - eso es exclusivo de la ficha completa.
+  // ------------------------------------------------------------------
+
+  let comercioModalActual = null;
+
+  function abrirModalFichaGratis(c) {
+    comercioModalActual = c;
+
+    const fotoCont = document.getElementById('modal-ficha-foto');
+    fotoCont.innerHTML = c.foto_portada
+      ? `<img src="${c.foto_portada}" alt="${c.nombre_negocio}" loading="lazy">`
+      : `<div class="foto-vacia-p"><i data-lucide="store"></i></div>`;
+
+    document.getElementById('modal-ficha-categoria').textContent = c.categoria_nombre || 'Comercio';
+
+    const destacado = c.plan && c.plan !== 'gratuito';
+    document.getElementById('modal-ficha-badge').style.display = destacado ? 'inline-flex' : 'none';
+
+    document.getElementById('modal-ficha-nombre').textContent = c.nombre_negocio;
+
+    const localidadTexto = c.localidad_nombre || c.direccion;
+    const localidadCont = document.getElementById('modal-ficha-localidad');
+    if (localidadTexto) {
+      document.getElementById('modal-ficha-localidad-texto').textContent = localidadTexto;
+      localidadCont.style.display = 'flex';
+    } else {
+      localidadCont.style.display = 'none';
+    }
+
+    document.getElementById('modal-ficha-descripcion').textContent =
+      c.descripcion || 'Todavía no cargó una descripción en la guía.';
+
+    // Reset del bloque de reclamo cada vez que se abre para un comercio distinto.
+    document.getElementById('modal-btn-reclamar').style.display = 'block';
+    const form = document.getElementById('modal-form-reclamar');
+    form.reset();
+    form.style.display = 'none';
+    document.getElementById('modal-reclamar-error').style.display = 'none';
+    document.getElementById('modal-reclamar-exito').style.display = 'none';
+
+    refrescarIconos();
+    if (typeof window.abrirFichaGratisModal === 'function') window.abrirFichaGratisModal();
+  }
+
+  function conectarModalReclamo() {
+    const btnAbrir = document.getElementById('modal-btn-reclamar');
+    const form = document.getElementById('modal-form-reclamar');
+    const errorEl = document.getElementById('modal-reclamar-error');
+    const exitoEl = document.getElementById('modal-reclamar-exito');
+    if (!btnAbrir || !form) return;
+
+    btnAbrir.addEventListener('click', () => {
+      btnAbrir.style.display = 'none';
+      form.style.display = 'flex';
+      if (comercioModalActual) {
+        registrarEvento('click_reclamar_perfil', { comercio_id: comercioModalActual.id, origen: 'comerciantes' });
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.style.display = 'none';
+      if (!comercioModalActual) return;
+
+      const nombre = document.getElementById('modal-reclamar-nombre').value.trim();
+      const telefono = document.getElementById('modal-reclamar-telefono').value.trim();
+      const email = document.getElementById('modal-reclamar-email').value.trim();
+      const mensaje = document.getElementById('modal-reclamar-mensaje').value.trim();
+
+      if (!nombre || (!telefono && !email)) {
+        errorEl.textContent = 'Ingresá tu nombre y al menos un teléfono o email de contacto.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        await reclamarPerfil(comercioModalActual.id, { nombre, telefono, email, mensaje });
+        form.style.display = 'none';
+        exitoEl.style.display = 'block';
+      } catch (err) {
+        errorEl.textContent = err.message || 'No pudimos enviar el reclamo, probá de nuevo.';
+        errorEl.style.display = 'block';
+      }
+    });
+  }
+  conectarModalReclamo();
 
   // ------------------------------------------------------------------
   // Carga de secciones reales (reemplazan el contenido hardcodeado)
@@ -162,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const lista = destacados.length ? destacados : todos.slice(0, 8);
       cont.innerHTML = lista.map(tarjetaPremium).join('') || '<p class="sin-resultados">Todavía no hay comercios cargados.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(cont, lista);
+      conectarInteraccionTarjetas(cont, lista);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar los comercios destacados.</p>';
     }
@@ -175,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'gastronomia' });
       cont.innerHTML = comercios.map(tarjetaGastro).join('') || '<p class="sin-resultados">Todavía no hay comercios gastronómicos cargados.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(cont, comercios);
+      conectarInteraccionTarjetas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de gastronomía.</p>';
     }
@@ -189,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const recientes = [...todos].sort((a, b) => (b.id || 0) - (a.id || 0)).slice(0, 8);
       cont.innerHTML = recientes.map((c) => tarjetaArrival(c, '¡NUEVO EN LA GUÍA!')).join('') || '<p class="sin-resultados">Todavía no hay comercios cargados.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(cont, recientes);
+      conectarInteraccionTarjetas(cont, recientes);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar los últimos comercios sumados.</p>';
     }
@@ -202,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'indumentaria' });
       cont.innerHTML = comercios.map((c) => tarjetaArrival(c)).join('') || '<p class="sin-resultados">Todavía no hay comercios de indumentaria cargados.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(cont, comercios);
+      conectarInteraccionTarjetas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de indumentaria.</p>';
     }
@@ -215,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comercios = await fetchComercios({ categoria: 'servicios' });
       cont.innerHTML = comercios.map((c, i) => tarjetaEssential(c, (i % 6) + 1)).join('') || '<p class="sin-resultados">Todavía no hay servicios cargados.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(cont, comercios);
+      conectarInteraccionTarjetas(cont, comercios);
     } catch (e) {
       cont.innerHTML = '<p class="sin-resultados">No pudimos cargar la sección de servicios.</p>';
     }
@@ -305,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ? comercios.map(tarjetaResultado).join('')
         : '<p class="sin-resultados">No encontramos comercios que coincidan con tu búsqueda.</p>';
       refrescarIconos();
-      conectarTrackingVerMas(resultadosGrid, comercios);
+      conectarInteraccionTarjetas(resultadosGrid, comercios);
     } catch (e) {
       resultadosGrid.innerHTML = '<p class="sin-resultados">No pudimos cargar los resultados. Revisá tu conexión.</p>';
     }

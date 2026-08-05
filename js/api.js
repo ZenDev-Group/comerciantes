@@ -44,3 +44,17 @@ function registrarEvento(tipo, { comercio_id, termino_busqueda, origen } = {}) {
     // Nunca bloquear la navegación real del usuario por un evento de analítica.
   }
 }
+
+// Pide reclamar el perfil de un comercio ("¿Sos el dueño? Reclamá tu perfil" - sección 5.1
+// del plan de tarjetas/landing), usado desde el modal de ficha gratis.
+function reclamarPerfil(comercioId, datos) {
+  return fetch(`${API_BASE_URL}/api/comercios/${comercioId}/reclamar`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos)
+  }).then(async (response) => {
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || 'Error al enviar el reclamo.');
+    return data;
+  });
+}

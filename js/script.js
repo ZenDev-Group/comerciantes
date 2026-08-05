@@ -660,6 +660,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Expuestos para que comercios.js los dispare después de poblar el modal con datos
+    // reales (las tarjetas se insertan de forma asíncrona, después de que este script
+    // ya corrió, así que el binding de abajo por selector nunca las alcanza a tiempo).
+    window.abrirFichaGratisModal = openModal;
+    window.cerrarFichaGratisModal = closeModal;
+
     // Attach Listeners
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
