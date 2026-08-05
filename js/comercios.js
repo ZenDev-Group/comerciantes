@@ -164,10 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------
-  // Modal de "ficha gratis" (bottom sheet ya existente en el HTML/CSS,
-  // antes sin usar) - solo la info que la matriz del plan permite en el
-  // plan gratuito: foto/logo, categoría, nombre, dirección y descripción.
-  // Sin WhatsApp/llamar/mapa/galería - eso es exclusivo de la ficha completa.
+  // Modal de "ficha gratis" (bottom sheet en dos columnas: info del comercio a la
+  // izquierda, mensajería + upsell a la derecha en desktop) - solo la info que la
+  // matriz del plan permite en el plan gratuito: foto/logo, categoría, nombre,
+  // localidad y descripción. Sin WhatsApp/llamar/mapa/galería (exclusivo de la
+  // ficha completa) - en su lugar, un formulario de mensaje directo a la web.
   // ------------------------------------------------------------------
 
   let comercioModalActual = null;
@@ -203,60 +204,58 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal-ficha-descripcion').textContent =
       c.descripcion || 'Todavía no cargó una descripción en la guía.';
 
-    // Reset del bloque de reclamo cada vez que se abre para un comercio distinto.
-    document.getElementById('modal-btn-reclamar').style.display = 'flex'; // .reclamar-perfil-btn es flex (icono + texto)
-    const form = document.getElementById('modal-form-reclamar');
-    form.reset();
-    form.style.display = 'none';
-    document.getElementById('modal-reclamar-error').style.display = 'none';
-    document.getElementById('modal-reclamar-exito').style.display = 'none';
+    // Reset del formulario de mensaje directo cada vez que se abre para un comercio distinto.
+    const formMensaje = document.getElementById('modal-form-mensaje-web');
+    if (formMensaje) {
+      formMensaje.reset();
+      formMensaje.style.display = 'block';
+    }
+    const exitoBox = document.getElementById('modal-mensaje-exito');
+    if (exitoBox) exitoBox.style.display = 'none';
+    const errorEl = document.getElementById('modal-mensaje-error');
+    if (errorEl) errorEl.style.display = 'none';
 
     refrescarIconos();
     if (typeof window.abrirFichaGratisModal === 'function') window.abrirFichaGratisModal();
   }
 
-  function conectarModalReclamo() {
-    const btnAbrir = document.getElementById('modal-btn-reclamar');
-    const form = document.getElementById('modal-form-reclamar');
-    const errorEl = document.getElementById('modal-reclamar-error');
-    const exitoEl = document.getElementById('modal-reclamar-exito');
-    if (!btnAbrir || !form) return;
-
-    btnAbrir.addEventListener('click', () => {
-      btnAbrir.style.display = 'none';
-      form.style.display = 'flex';
-      if (comercioModalActual) {
-        registrarEvento('click_reclamar_perfil', { comercio_id: comercioModalActual.id, origen: 'comerciantes' });
-      }
-    });
+  // Mensaje directo desde la web (sección 2 del plan: reemplaza WhatsApp/llamar en perfiles
+  // sin ficha completa) - un solo listener fijo, comercioModalActual dice a quién va cada envío.
+  function conectarModalMensajeDirecto() {
+    const form = document.getElementById('modal-form-mensaje-web');
+    if (!form) return;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      errorEl.style.display = 'none';
+      const errorEl = document.getElementById('modal-mensaje-error');
+      const exitoBox = document.getElementById('modal-mensaje-exito');
       if (!comercioModalActual) return;
+      errorEl.style.display = 'none';
 
-      const nombre = document.getElementById('modal-reclamar-nombre').value.trim();
-      const telefono = document.getElementById('modal-reclamar-telefono').value.trim();
-      const email = document.getElementById('modal-reclamar-email').value.trim();
-      const mensaje = document.getElementById('modal-reclamar-mensaje').value.trim();
-
-      if (!nombre || (!telefono && !email)) {
-        errorEl.textContent = 'Ingresá tu nombre y al menos un teléfono o email de contacto.';
-        errorEl.style.display = 'block';
-        return;
-      }
+      const nombre = document.getElementById('mensaje-nombre').value.trim();
+      const contacto = document.getElementById('mensaje-contacto').value.trim();
+      const mensaje = document.getElementById('mensaje-contenido').value.trim();
 
       try {
-        await reclamarPerfil(comercioModalActual.id, { nombre, telefono, email, mensaje });
+        const res = await fetch(`${API_BASE_URL}/api/comercios/${comercioModalActual.id}/mensajes`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, contacto, mensaje })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'No se pudo enviar el mensaje.');
+
         form.style.display = 'none';
-        exitoEl.style.display = 'flex'; // .reclamar-exito es flex-column, no block
+        exitoBox.style.display = 'flex';
+        refrescarIconos();
       } catch (err) {
-        errorEl.textContent = err.message || 'No pudimos enviar el reclamo, probá de nuevo.';
+        errorEl.textContent = err.message;
         errorEl.style.display = 'block';
       }
     });
   }
-  conectarModalReclamo();
+  conectarModalMensajeDirecto();
 
   // ------------------------------------------------------------------
   // Carga de secciones reales (reemplazan el contenido hardcodeado)

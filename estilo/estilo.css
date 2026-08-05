@@ -4320,27 +4320,68 @@ h2 span {
     text-decoration: underline;
 }
 
+/* Banner de Upgrade Premium (columna derecha del modal, dirigido al dueño del comercio) */
 .ficha-aviso-freemium {
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 14px;
-    padding: 16px 20px;
-    margin: 24px 0;
-    font-size: 0.85rem;
-    color: #64748b;
+    background: linear-gradient(135deg, #1e272e, #0f172a);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 24px;
+    color: #e2e8f0;
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 12px;
-    line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.ficha-aviso-freemium i.icono-candado,
-.ficha-aviso-freemium svg.icono-candado {
+.ficha-aviso-freemium .aviso-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.ficha-aviso-freemium .icono-premium {
+    color: #ffa801;
+    width: 20px;
+    height: 20px;
+}
+
+.ficha-aviso-freemium p {
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: #94a3b8;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    margin-top: 2px;
+    margin: 0;
+}
+
+.btn-upgrade-premium {
+    background: var(--primary);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+    margin-top: 5px;
+}
+
+.btn-upgrade-premium:hover {
+    background: #f43f5e;
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-upgrade-premium svg {
+    width: 16px;
+    height: 16px;
 }
 
 .ficha-cta-bar {
@@ -4434,107 +4475,152 @@ h2 span {
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* "¿Sos el dueño? Reclamá tu perfil" dentro del modal de ficha gratis */
-.ficha-reclamo-bloque {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #f1f5f9;
-}
-
-.reclamar-perfil-btn {
-    background: var(--secondary);
-    color: var(--white);
-    padding: 14px 24px;
-    border: none;
-    border-radius: var(--radius-pill);
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(30, 39, 46, 0.15);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.reclamar-perfil-btn:hover {
-    background: var(--primary);
-    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
-    transform: translateY(-2px);
-}
-
-.reclamar-perfil-btn i,
-.reclamar-perfil-btn svg {
-    width: 18px;
-    height: 18px;
-}
-
-.ficha-reclamo-bloque form {
+/* Layout en 2 columnas en Desktop */
+.modal-grid-container {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-top: 18px;
-    background: #f8fafc;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    gap: 24px;
 }
 
-.ficha-reclamo-bloque label {
+@media (min-width: 992px) {
+    .modal-grid-container {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+        align-items: start;
+    }
+}
+
+/* Columna Izquierda: Información del Comercio */
+.modal-col-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Columna Derecha: Caja de Mensajes Directos */
+.ficha-mensaje-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.ficha-mensaje-box h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.ficha-mensaje-box h3 svg {
+    color: var(--primary);
+    width: 20px;
+    height: 20px;
+}
+
+.mensaje-box-sub {
     font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 16px;
+}
+
+/* Grupos de formularios */
+.form-group-p {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.form-group-p label {
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--secondary);
-    margin-top: 6px;
 }
 
-.ficha-reclamo-bloque input,
-.ficha-reclamo-bloque textarea {
+.form-group-p input,
+.form-group-p textarea {
     padding: 10px 14px;
     border: 1px solid #cbd5e1;
     border-radius: 10px;
     font-family: inherit;
     font-size: 0.85rem;
-    transition: border-color 0.2s ease;
+    color: var(--secondary);
+    transition: all 0.2s ease;
 }
 
-.ficha-reclamo-bloque input:focus,
-.ficha-reclamo-bloque textarea:focus {
+.form-group-p input:focus,
+.form-group-p textarea:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
 }
 
-.ficha-reclamo-bloque button[type="submit"] {
-    margin-top: 14px;
+/* Botón de Enviar Mensaje */
+.btn-enviar-mensaje-web {
+    background: var(--secondary);
+    color: var(--white);
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(30, 39, 46, 0.15);
+    margin-top: 10px;
 }
 
-.reclamar-error {
+.btn-enviar-mensaje-web:hover {
+    background: var(--primary);
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-enviar-mensaje-web svg {
+    width: 16px;
+    height: 16px;
+}
+
+.mensaje-error {
     color: #dc2626;
     font-size: 0.78rem;
-    margin-top: 6px;
+    margin-bottom: 10px;
 }
 
-/* Pantalla de éxito tras enviar el reclamo */
-.reclamar-exito {
+.mensaje-exito-box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    padding: 24px;
-    border-radius: 16px;
-    margin-top: 18px;
+    padding: 30px 10px;
 }
 
-.reclamar-exito h3 {
+.mensaje-exito-box svg {
+    color: #22c55e;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 12px;
+}
+
+.mensaje-exito-box h4 {
     color: #166534;
     font-size: 1.1rem;
     margin-bottom: 6px;
 }
 
-.reclamar-exito p {
+.mensaje-exito-box p {
     color: #16a34a;
     font-size: 0.85rem;
 }

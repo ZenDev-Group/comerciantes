@@ -1699,51 +1699,73 @@
             </button>
             <div class="modal-content" id="modal-content">
                 <div class="ficha-portada-modal" id="modal-ficha-foto"></div>
-                <div class="modal-header-placeholder">
-                    <div class="ficha-fila-categoria">
-                        <span class="ficha-categoria" id="modal-ficha-categoria">Comercio</span>
-                        <span class="ficha-badge-destacado" id="modal-ficha-badge" style="display:none;">
-                            <i data-lucide="star"></i> Destacado
-                        </span>
-                    </div>
-                    <h2 class="ficha-nombre" id="modal-ficha-nombre"></h2>
-                    <div class="ficha-localidad" id="modal-ficha-localidad" style="display:none;">
-                        <i data-lucide="map-pin"></i><span id="modal-ficha-localidad-texto"></span>
-                    </div>
-                </div>
-                <div class="modal-body-placeholder">
-                    <p class="ficha-descripcion" id="modal-ficha-descripcion"></p>
 
-                    <div class="ficha-aviso-freemium" id="modal-ficha-aviso">
-                        <i data-lucide="lock" class="icono-candado"></i>
-                        <p>Este comercio cuenta con una ficha básica gratuita. Si sos el dueño, podés reclamarla para habilitar el contacto directo por WhatsApp, teléfono y redes sociales.</p>
+                <!-- Grid principal de dos columnas (desktop >=992px, apilado en mobile) -->
+                <div class="modal-grid-container">
+
+                    <!-- Columna Izquierda: Información del Comercio -->
+                    <div class="modal-col-info">
+                        <div class="ficha-fila-categoria">
+                            <span class="ficha-categoria" id="modal-ficha-categoria">Comercio</span>
+                            <span class="ficha-badge-destacado" id="modal-ficha-badge" style="display:none;">
+                                <i data-lucide="star"></i> Destacado
+                            </span>
+                        </div>
+                        <h2 class="ficha-nombre" id="modal-ficha-nombre"></h2>
+                        <div class="ficha-localidad" id="modal-ficha-localidad" style="display:none;">
+                            <i data-lucide="map-pin"></i><span id="modal-ficha-localidad-texto"></span>
+                        </div>
+
+                        <p class="ficha-descripcion" id="modal-ficha-descripcion"></p>
                     </div>
 
-                    <div class="ficha-reclamo-bloque">
-                        <button type="button" id="modal-btn-reclamar" class="reclamar-perfil-btn">
-                            <i data-lucide="shield-check"></i> ¿Sos el dueño de este comercio? Reclamá tu perfil
-                        </button>
-                        <form id="modal-form-reclamar" style="display:none;">
-                            <label for="modal-reclamar-nombre">Tu nombre</label>
-                            <input type="text" id="modal-reclamar-nombre" required>
-                            <label for="modal-reclamar-telefono">Teléfono</label>
-                            <input type="tel" id="modal-reclamar-telefono">
-                            <label for="modal-reclamar-email">Email</label>
-                            <input type="email" id="modal-reclamar-email">
-                            <label for="modal-reclamar-mensaje">Mensaje (opcional)</label>
-                            <textarea id="modal-reclamar-mensaje" rows="2"></textarea>
-                            <p id="modal-reclamar-error" class="reclamar-error" style="display:none;"></p>
-                            <button type="submit" class="reclamar-perfil-btn">Enviar reclamo</button>
-                        </form>
-                        <div id="modal-reclamar-exito" class="reclamar-exito" style="display:none;">
-                            <i data-lucide="check-circle" style="color: #22c55e; width: 40px; height: 40px; margin-bottom: 10px;"></i>
-                            <h3>¡Reclamo enviado con éxito!</h3>
-                            <p>Nos contactaremos a la brevedad para verificar la titularidad del comercio.</p>
+                    <!-- Columna Derecha: Mensajería Web y Conversión -->
+                    <div class="modal-col-action">
+                        <!-- Formulario de Mensaje Directo (reemplaza WhatsApp/llamar en perfiles gratuitos) -->
+                        <div class="ficha-mensaje-box">
+                            <h3><i data-lucide="message-square"></i> Enviar Mensaje Directo</h3>
+                            <p class="mensaje-box-sub">Escribile directamente a este comercio desde la web:</p>
+
+                            <form id="modal-form-mensaje-web">
+                                <div class="form-group-p">
+                                    <label for="mensaje-nombre">Tu nombre</label>
+                                    <input type="text" id="mensaje-nombre" placeholder="Ej: Juan Pérez" required>
+                                </div>
+                                <div class="form-group-p">
+                                    <label for="mensaje-contacto">Tu Teléfono o Email</label>
+                                    <input type="text" id="mensaje-contacto" placeholder="Ej: 2473 123456" required>
+                                </div>
+                                <div class="form-group-p">
+                                    <label for="mensaje-contenido">Mensaje</label>
+                                    <textarea id="mensaje-contenido" rows="3" placeholder="Hola, quería consultar sobre..." required></textarea>
+                                </div>
+                                <p id="modal-mensaje-error" class="mensaje-error" style="display:none;"></p>
+                                <button type="submit" class="btn-enviar-mensaje-web">
+                                    <i data-lucide="send"></i> Enviar Consulta
+                                </button>
+                            </form>
+
+                            <div id="modal-mensaje-exito" class="mensaje-exito-box" style="display:none;">
+                                <i data-lucide="check-circle"></i>
+                                <h4>¡Mensaje enviado!</h4>
+                                <p>El comercio recibirá tu mensaje a la brevedad.</p>
+                            </div>
+                        </div>
+
+                        <!-- Banner de Conversión para el Comercio (Upgrade / Registro) -->
+                        <div class="ficha-aviso-freemium">
+                            <div class="aviso-titulo">
+                                <i data-lucide="zap" class="icono-premium"></i>
+                                <span>¿Sos dueño de este comercio?</span>
+                            </div>
+                            <p>Activá el Plan Premium para habilitar botones de WhatsApp directo, tus redes sociales y un mapa interactivo con Google Maps.</p>
+                            <a href="https://comerciantes-web-mvp.vercel.app/suscripciones.html" class="btn-upgrade-premium">
+                                <i data-lucide="arrow-right-circle"></i> Ver Planes Premium
+                            </a>
                         </div>
                     </div>
 
-                    <a href="https://comerciantes-web-mvp.vercel.app/suscripciones.html" target="_blank" class="ficha-red" style="display:inline-block;margin-top:18px;">Conocé el Plan Premium →</a>
-                </div>
+                </div> <!-- Fin modal-grid-container -->
             </div>
         </div>
     </div>
