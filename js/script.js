@@ -621,6 +621,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Set Display Block
         universalModal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Lock Body Scroll
+        if (typeof lenis !== 'undefined') lenis.stop(); // Lenis seguía interceptando la rueda del mouse sobre el modal
 
         // 3. Animate In (GSAP)
         if (typeof gsap !== 'undefined') {
@@ -651,12 +652,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 onComplete: () => {
                     universalModal.style.display = 'none';
                     document.body.style.overflow = ''; // Restore Scroll
+                    if (typeof lenis !== 'undefined') lenis.start();
                 }
             });
         } else {
             // Fallback
             universalModal.style.display = 'none';
             document.body.style.overflow = '';
+            if (typeof lenis !== 'undefined') lenis.start();
         }
     };
 
